@@ -1,0 +1,37 @@
+.App {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+}
+
+.App > * {
+	z-index: 2;
+}
+
+.blur {
+	width: 20rem;
+	height: 20rem;
+	position: absolute;
+	z-index: 0;
+	border-radius: 100%;
+	filter: blur(100px);
+}
+::-webkit-scrollbar {
+	width: 8px;
+	margin-left: 1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	border-radius: 2rem;
+	background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
