@@ -13,3 +13,4 @@
 -   React
 -   Zustand
 -   React-query
+-   TailwindCSS
