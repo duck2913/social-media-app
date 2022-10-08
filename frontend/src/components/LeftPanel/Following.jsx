@@ -1,5 +1,5 @@
 import React from "react"
-import '../../App.css'
+import "../../App.css"
 
 const followers = [
 	{
@@ -22,13 +22,18 @@ const followers = [
 		addr: "@xiule",
 		img: "https://images.unsplash.com/photo-1665157296251-9ed707fe0cf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60",
 	},
+	{
+		name: "Xiu le",
+		addr: "@xiule",
+		img: "https://images.unsplash.com/photo-1665157296251-9ed707fe0cf5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60",
+	},
 ]
 
 const Following = () => {
 	return (
-		<>
-			<h2 className="text-black font-semibold ">Who is following you?</h2>
-			<div className="h-[9rem] overflow-y-scroll">
+		<div>
+			<h2 className="text-black font-semibold mb-3">Who is following you?</h2>
+			<div className="px-2">
 				<div className="flex flex-col gap-3">
 					{followers.map((follower) => (
 						<div className="w-full flex items-center justify-start gap-3">
@@ -48,7 +53,7 @@ const Following = () => {
 					))}
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
 

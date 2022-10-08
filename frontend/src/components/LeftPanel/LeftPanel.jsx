@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar"
 
 const LeftPanel = () => {
 	return (
-		<div className="flex flex-col gap-5 p-4">
+		<div className="p-4 h-[100vh] overflow-auto">
 			<SearchBar />
 			<Info />
 			<Following />

@@ -10,13 +10,14 @@
 .blur {
 	width: 20rem;
 	height: 20rem;
-	position: absolute;
+	position: fixed;
 	z-index: 0;
 	border-radius: 100%;
 	filter: blur(100px);
 }
+
 ::-webkit-scrollbar {
-	width: 8px;
+	width: 6px;
 	margin-left: 1rem;
 }
 
@@ -28,10 +29,5 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
 	border-radius: 2rem;
-	background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-	background: #555;
+	background: transparent;
 }

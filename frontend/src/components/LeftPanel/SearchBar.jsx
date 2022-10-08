@@ -5,7 +5,7 @@ import React from "react"
 
 const SearchBar = () => {
 	return (
-		<div className="flex items-center gap-4">
+		<div className="flex items-center gap-4 mb-[1rem]">
 			<VscRocket className="bg-blue-500 text-[2rem] rounded-full p-1 text-white" />
 			<div className="relative">
 				<input
