@@ -3,7 +3,7 @@ import Post from "./Post"
 
 const Posts = () => {
 	return (
-		<div className="flex gap-5 flex-col">
+		<div className="flex gap-8 flex-col">
 			<Post />
 			<Post />
 		</div>

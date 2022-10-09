@@ -37,7 +37,7 @@ const NewPost = () => {
 					<HiCalendar />
 					<p>Calendar</p>
 				</div>
-				<button className="font-bold bg-blue-500 px-2 py-1 rounded-lg text-white">
+				<button className="font-bold bg-blue-500 px-2 py-1 rounded-lg text-white active:-translate-y-2 transition-all">
 					Share
 				</button>
 			</div>
