@@ -5,7 +5,7 @@ import RightPanel from "./components/RightPanel/RightPanel"
 import LeftPanel from "./components/LeftPanel/LeftPanel"
 
 function App() {
-	const authed = false
+	const authed = true
 
 	return (
 		<div className="bg-gray-100">
