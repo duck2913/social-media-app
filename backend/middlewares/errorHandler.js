@@ -1,5 +1,5 @@
 const errorHandler = async (err, req, res, next) => {
-	console.log(`Catch an error: ${err}`)
+	res.status(500).json("Error: " + err)
 }
 
 module.exports = errorHandler

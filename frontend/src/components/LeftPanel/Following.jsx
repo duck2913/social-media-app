@@ -30,6 +30,10 @@ const followers = [
 ]
 
 const Following = () => {
+	function handleClick() {
+		fetch("http://localhost:4000/test")
+	}
+
 	return (
 		<div>
 			<h2 className="text-black font-semibold mb-3">Who is following you?</h2>
@@ -46,7 +50,10 @@ const Following = () => {
 								<h2 className="font-semibold text-sm">{follower.name}</h2>
 								<p className="text-gray-500 text-sm">{follower.addr}</p>
 							</div>
-							<button className="ml-auto font-bold bg-gradient-to-r from-purple-600  to-pink-500 text-white px-2 py-1 rounded-lg active:-translate-y-2 transition-all">
+							<button
+								className="ml-auto font-bold bg-gradient-to-r from-purple-600  to-pink-500 text-white px-2 py-1 rounded-lg active:-translate-y-2 transition-all"
+								onClick={handleClick}
+							>
 								Follow
 							</button>
 						</div>
