@@ -11,19 +11,7 @@ const port = process.env.PORT || 4000
 const errorHandler = require("../middlewares/errorHandler")
 const authRouter = require("./routers/authRouter")
 // middleware
-app.use(function (_, res, next) {
-	res.header("Content-Type", "application/json;charset=UTF-8")
-	res.header("Access-Control-Allow-Credentials", true)
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	next()
-})
-app.use(
-	cors({
-		origin: "*",
-		credentials: true, //access-control-allow-credentials:true
-		optionSuccessStatus: 200,
-	}),
-)
+app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
