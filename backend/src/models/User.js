@@ -5,6 +5,19 @@ class User {
 		return db.any("select name from users where name = $1 and password = $2", [name, password])
 	}
 
+	static async findByName(name) {
+		return db.any("select name from users where name = $1", [name])
+	}
+
+	static async addGoogleUser(username, picture) {
+		const password = "cos cai lon chu ma mo"
+		await db.any(`insert into users(name, password, avatar_url) values ($1, $2, $3)`, [
+			username,
+			password,
+			picture,
+		])
+	}
+
 	static async addUser(username, password) {
 		try {
 			await db.any(`insert into users(name, password) values ($1, $2)`, [username, password])
