@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { MantineProvider } from "@mantine/core"
 import { CookiesProvider } from "react-cookie"
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 const queryClient = new QueryClient()
 
@@ -29,12 +30,14 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
 	<React.StrictMode>
-		<CookiesProvider>
-			<MantineProvider withGlobalStyles>
-				<QueryClientProvider client={queryClient}>
-					<RouterProvider router={router} />
-				</QueryClientProvider>
-			</MantineProvider>
-		</CookiesProvider>
+		<GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}>
+			<CookiesProvider>
+				<MantineProvider withGlobalStyles>
+					<QueryClientProvider client={queryClient}>
+						<RouterProvider router={router} />
+					</QueryClientProvider>
+				</MantineProvider>
+			</CookiesProvider>
+		</GoogleOAuthProvider>
 	</React.StrictMode>,
 )

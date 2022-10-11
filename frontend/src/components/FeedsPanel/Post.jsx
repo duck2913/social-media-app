@@ -25,7 +25,7 @@ const Post = () => {
 			<div className="nums_likes text-sm text-gray-400 mt-2 font-semibold">2300 likes</div>
 			<div className="mt-5">
 				{comments.map((comment) => (
-					<div className="flex gap-2 items-center">
+					<div className="flex gap-2 items-center" id={comment.from}>
 						<h3 className="font-semibold">{comment.from}</h3>
 						<p className="text-sm">{comment.message}</p>
 					</div>

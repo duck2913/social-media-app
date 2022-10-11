@@ -17,7 +17,7 @@ const RightPanel = () => {
 				<h1 className="font-semibold text-xl mb-5 text-blue-500">Trends for you</h1>
 				<div className="flex flex-col gap-4">
 					{trends.map((trend) => (
-						<div>
+						<div id={trend.name}>
 							<p className="font-semibold">#{trend.name}</p>
 							<p className="text-sm">{trend.num}k shares</p>
 						</div>

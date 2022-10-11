@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie"
 import { useNavigate } from "react-router-dom"
 
 function App() {
-	const [cookies, setCookie] = useCookies(["token"])
+	const [cookies] = useCookies(["token"])
 	const navigate = useNavigate()
 
 	useEffect(() => {

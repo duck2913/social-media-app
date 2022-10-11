@@ -10,7 +10,7 @@ const postLogin = async (req, res) => {
 		return res.status(400).json("Username and password is not correct")
 	}
 	// sign with token
-	const token = jwt.sign({ name }, "secret")
+	const token = jwt.sign({ name }, process.env.JWT_SECRET, { expiresIn: "1h" })
 	return res.status(200).json({ message: "Login successfully", token: token })
 }
 

@@ -40,7 +40,10 @@ const Following = () => {
 			<div className="px-2">
 				<div className="flex flex-col gap-3">
 					{followers.map((follower) => (
-						<div className="w-full flex items-center justify-start gap-3">
+						<div
+							className="w-full flex items-center justify-start gap-3"
+							id="follower.name"
+						>
 							<img
 								src={follower.img}
 								alt="avatar"

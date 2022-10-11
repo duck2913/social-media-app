@@ -1,18 +1,25 @@
 import React, { useRef, useState } from "react"
-import { Link } from "react-router-dom"
-import { Loader } from "@mantine/core"
-import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { useMutation } from "@tanstack/react-query"
+import { useNavigate, Link } from "react-router-dom"
+import { Loader } from "@mantine/core"
 import { useCookies } from "react-cookie"
+import { GoogleLogin } from "@react-oauth/google"
+import jwt_decode from "jwt-decode"
 
 const Login = () => {
 	const nameRef = useRef()
 	const passwordRef = useRef()
 	const [msg, setMsg] = useState("")
 	const navigate = useNavigate()
+	const [, setCookie] = useCookies(["token"])
 
-	const [cookies, setCookie] = useCookies(["token"])
+	function handleLogin(e) {
+		e.preventDefault()
+		const name = nameRef.current.value
+		const password = passwordRef.current.value
+		mutate({ name, password })
+	}
 
 	const { mutate, isLoading, isError } = useMutation(
 		(data) => {
@@ -21,7 +28,6 @@ const Login = () => {
 		{
 			onSuccess: (data) => {
 				const token = data.data.token
-				console.log("🚀 -> file: Login.jsx -> line 21 -> token", token)
 				setCookie("token", token)
 				navigate("/")
 			},
@@ -31,11 +37,21 @@ const Login = () => {
 		},
 	)
 
-	function handleLogin(e) {
-		e.preventDefault()
-		const name = nameRef.current.value
-		const password = passwordRef.current.value
-		mutate({ name, password })
+	async function googleSignIn(credentialResponse) {
+		const { credential } = credentialResponse
+		const data = jwt_decode(credential)
+		const { name, picture } = data
+		const result = await axios.post(`http://localhost:4000/auth/oauth`, {
+			name,
+			picture,
+		})
+		const { token } = result.data
+		if (!token) {
+			setMsg("google login failed")
+			return
+		}
+		setCookie("token", token)
+		navigate("/")
 	}
 
 	return (
@@ -59,6 +75,16 @@ const Login = () => {
 				<button className="mx-auto block font-semibold bg-indigo-500 py-1 px-3 text-white rounded-md">
 					Login
 				</button>
+				{/* oauth */}
+				<div className="my-4">
+					<GoogleLogin
+						onSuccess={googleSignIn}
+						onError={() => {
+							console.log("Login Failed")
+						}}
+					/>
+				</div>
+				{/*  */}
 				<p className="text-sm text-gray-500 mt-3 text-center">
 					Don't have an account?{" "}
 					<span className="text-blue-700 font-semibold">
