@@ -67,7 +67,7 @@ const Signup = () => {
 						!isError && navigate("/")
 					}}
 				>
-					You have been register with us!
+					Please check your email to complete registration!
 				</Notification>
 			)}
 			<form className="form bg-white p-5 rounded-xl w-[20rem]" onSubmit={handleSubmit}>

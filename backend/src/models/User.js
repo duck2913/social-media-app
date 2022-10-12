@@ -3,15 +3,20 @@ const bcrypt = require("bcrypt")
 const saltRounds = 10
 
 class User {
-	static async addUser(fullname, username, email, password) {
+	static async addUser(fullname, username, email, password, hash) {
 		try {
-			bcrypt.hash(password, saltRounds, async function (err, hash) {
-				if (err) throw err
+			if (!hash) {
+				const hash = await bcrypt.hash(password, saltRounds)
 				await db.any(
 					`insert into Users(fullname,username,email, password) values ($1, $2, $3, $4)`,
 					[fullname, username, email, hash],
 				)
-			})
+			} else {
+				await db.any(
+					`insert into Users(fullname,username,email, password) values ($1, $2, $3, $4)`,
+					[fullname, username, email, hash],
+				)
+			}
 		} catch (error) {
 			console.log(error)
 			throw err
@@ -45,6 +50,18 @@ class User {
 			])
 		} catch (error) {
 			console.log(error)
+		}
+	}
+
+	static async checkPassword(username, inputPassword) {
+		try {
+			const queryResult = await db.any("select * from users where username = $1", username)
+			const password = queryResult[0].password
+			const valid = await bcrypt.compare(inputPassword, password)
+			return valid
+		} catch (error) {
+			console.log(error)
+			throw error
 		}
 	}
 }

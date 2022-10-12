@@ -8,6 +8,8 @@ const passport = require("passport")
 // current path /auth
 router.post("/login", authController.postLogin)
 
+router.get("/signup/:token", authController.getSignup)
+
 router.post("/signup", authController.postSignup)
 
 router.use("/oauth", oauthRouter)
