@@ -15,10 +15,19 @@ const postLogin = async (req, res) => {
 }
 
 const postSignup = async (req, res) => {
-	const name = req.body.name
+	const fullname = req.body.fullname
+	const username = req.body.username
+	const email = req.body.email
 	const password = req.body.password
-	await User.addUser(name, password)
-	res.json("sign up successfully")
+	// check if user already exist
+	const queryResult = await User.findByEmailOrName(email, username)
+	const user = queryResult[0]
+	console.log("🚀 -> file: authController.js -> line 24 -> user", user)
+	if (user) {
+		return res.status(400).json("username or email already existed ")
+	}
+	await User.addUser(fullname, username, email, password)
+	res.status(200).json("sign up successfully")
 }
 
 module.exports = {

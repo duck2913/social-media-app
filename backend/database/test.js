@@ -1,17 +1,25 @@
 const db = require("./config")
 
 const execute = async () => {
-	// const result = await db.any(
-	// 	`create table users(
-	//         id int serial primary key not null,
-	//         name varchar(50) not null,
-	//         title varchar(50),
-	//         avatar_url varchar(50)
-	//     )`,
-	// )
-	const result = await db.any("select * from users")
-	// console.table(result)
-	console.log(result)
+	try {
+		fullname = "hoang Minh duc"
+		picture = "http://"
+		email = "test@email.com"
+		const result = await db.any(
+			`insert into Users(fullname, avatar_url ,email ,tag ,password) values ($1, $2, $3,$4,$5)`,
+			[
+				fullname,
+				picture,
+				email,
+				"@" + fullname.toLowerCase().split("").join(""),
+				"co cc chu ma mo",
+			],
+		)
+		console.log("🚀 -> file: test.js -> line 6 -> result", result)
+	} catch (error) {
+		console.log("error")
+		console.log(error)
+	}
 }
 
 execute()

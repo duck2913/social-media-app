@@ -25,5 +25,5 @@ app.use(errorHandler)
 
 // start
 app.listen(port, () => {
-	console.log(`\n-- Server is listening on port ${port}--\n`)
+	console.log(`\n-- Server is listening on port ${port} --\n`)
 })
