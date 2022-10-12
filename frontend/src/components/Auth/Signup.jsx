@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom"
 
 const Signup = () => {
 	const nameRef = useRef()
+	const usernameRef = useRef()
+	const emailRef = useRef()
 	const passwordRef = useRef()
 	const confirmPasswordRef = useRef()
 
@@ -20,7 +22,8 @@ const Signup = () => {
 			return axios.post(`http://localhost:4000/auth/signup`, data)
 		},
 		{
-			onSuccess: () => {
+			onSuccess: (data) => {
+				console.log(data)
 				setOpened(true)
 				setMsg("")
 			},
@@ -33,9 +36,11 @@ const Signup = () => {
 
 	function handleSubmit(e) {
 		e.preventDefault()
-		const name = nameRef.current.value
+		const fullname = nameRef.current.value
+		const username = usernameRef.current.value
 		const password = passwordRef.current.value
 		const confirmPassword = confirmPasswordRef.current.value
+		const email = emailRef.current.value
 
 		if (confirmPassword !== password) {
 			setMsg("Wrong confirm password")
@@ -44,7 +49,7 @@ const Signup = () => {
 			}, 3000)
 			return
 		}
-		mutate({ name, password })
+		mutate({ fullname, username, email, password })
 	}
 
 	return (
@@ -69,14 +74,34 @@ const Signup = () => {
 				{isLoading && <Loader />}
 				<h1 className="text-xl font-semibold text-blue-500 mb-10">Sign up</h1>
 				{msg && <p className="my-1 text-red-500">{msg}</p>}
-				<p className="mb-1">Name</p>
+
+				<p className="mb-1">Full name</p>
 				<input
 					type="text"
-					name="name"
+					name="full name"
 					ref={nameRef}
 					required
 					className="border-blue-200 border-[2px] rounded-md px-4 mb-5 focus:outline-none focus:border-blue-500 w-full"
 				/>
+
+				<p className="mb-1">Email</p>
+				<input
+					type="email"
+					name="email"
+					ref={emailRef}
+					required
+					className="border-blue-200 border-[2px] rounded-md px-4 mb-5 focus:outline-none focus:border-blue-500 w-full"
+				/>
+
+				<p className="mb-1">Username</p>
+				<input
+					type="text"
+					name="username"
+					ref={usernameRef}
+					required
+					className="border-blue-200 border-[2px] rounded-md px-4 mb-5 focus:outline-none focus:border-blue-500 w-full"
+				/>
+
 				<p className="mb-1">Password</p>
 				<input
 					type="password"
@@ -85,6 +110,7 @@ const Signup = () => {
 					ref={passwordRef}
 					className="border-blue-200 border-[2px] rounded-md px-4 mb-5 focus:outline-none focus:border-blue-500 w-full"
 				/>
+
 				<p className="mb-1">Confirm password</p>
 				<input
 					type="password"
@@ -93,6 +119,7 @@ const Signup = () => {
 					ref={confirmPasswordRef}
 					className="border-blue-200 border-[2px] rounded-md px-4 mb-8 focus:outline-none focus:border-blue-500 w-full"
 				/>
+
 				<button className="mx-auto block font-semibold bg-indigo-500 py-1 px-3 text-white rounded-md">
 					Register
 				</button>

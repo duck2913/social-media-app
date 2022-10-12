@@ -40,10 +40,11 @@ const Login = () => {
 	async function googleSignIn(credentialResponse) {
 		const { credential } = credentialResponse
 		const data = jwt_decode(credential)
-		const { name, picture } = data
+		const { name, picture, email } = data
 		const result = await axios.post(`http://localhost:4000/auth/oauth`, {
 			name,
 			picture,
+			email,
 		})
 		const { token } = result.data
 		if (!token) {
@@ -82,7 +83,7 @@ const Login = () => {
 						onError={() => {
 							console.log("Login Failed")
 						}}
-                        className="w-full"
+						className="w-full"
 					/>
 				</div>
 				{/*  */}
@@ -98,4 +99,3 @@ const Login = () => {
 }
 
 export default Login
-
