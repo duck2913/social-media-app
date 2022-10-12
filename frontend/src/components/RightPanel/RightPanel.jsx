@@ -1,5 +1,7 @@
 import React from "react"
+import { useCookies } from "react-cookie"
 import { BiLogOut } from "react-icons/bi"
+
 const trends = [
 	{
 		name: "minion",
@@ -11,6 +13,12 @@ const trends = [
 ]
 
 const RightPanel = () => {
+	const [cookies, setCookie, removeCookie] = useCookies(["token"])
+
+	function logoutHandler() {
+		removeCookie("token")
+	}
+
 	return (
 		<div className="h-screen p-4">
 			<div className="bg-white rounded-xl p-10 relative">
@@ -23,7 +31,9 @@ const RightPanel = () => {
 						</div>
 					))}
 				</div>
-				<BiLogOut className="absolute right-5 top-5 w-[2rem] h-[2rem] bg-purple-200 rounded-full p-1 cursor-pointer active:-translate-y-2 transition-all" />
+				<div onClick={logoutHandler}>
+					<BiLogOut className="absolute right-5 top-5 w-[2rem] h-[2rem] bg-purple-200 rounded-full p-1 cursor-pointer active:-translate-y-2 transition-all" />
+				</div>
 			</div>
 		</div>
 	)

@@ -1,6 +1,7 @@
 console.clear()
 require("express-async-errors")
 require("dotenv").config()
+
 // libraries
 const express = require("express")
 const app = express()
@@ -9,6 +10,7 @@ const cookieParser = require("cookie-parser")
 const port = process.env.PORT || 4000
 const errorHandler = require("../middlewares/errorHandler")
 const authRouter = require("./routers/authRouter")
+
 // middleware
 app.use(cors())
 app.use(cookieParser())

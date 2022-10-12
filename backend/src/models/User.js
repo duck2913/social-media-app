@@ -2,11 +2,11 @@ const db = require("../../database/config")
 
 class User {
 	static async find(name, password) {
-		return db.any("select name from users where name = $1 and password = $2", [name, password])
+		return db.any("select * from users where name = $1 and password = $2", [name, password])
 	}
 
 	static async findByName(name) {
-		return db.any("select name from users where name = $1", [name])
+		return db.any("select * from users where name = $1", [name])
 	}
 
 	static async addGoogleUser(username, picture) {

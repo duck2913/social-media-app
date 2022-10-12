@@ -6,7 +6,6 @@ const googleSignIn = async (req, res) => {
 	// check if user already exist
 	const query = await User.findByName(name)
 	const user = query[0]
-	console.log("🚀 -> file: OAuthController.js -> line 9 -> user", user)
 	if (!user) {
 		await User.addGoogleUser(name, picture)
 	}

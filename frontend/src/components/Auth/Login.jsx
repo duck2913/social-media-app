@@ -82,6 +82,7 @@ const Login = () => {
 						onError={() => {
 							console.log("Login Failed")
 						}}
+                        className="w-full"
 					/>
 				</div>
 				{/*  */}
@@ -97,3 +98,4 @@ const Login = () => {
 }
 
 export default Login
+

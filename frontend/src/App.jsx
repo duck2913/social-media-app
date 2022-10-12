@@ -5,6 +5,7 @@ import LeftPanel from "./components/LeftPanel/LeftPanel"
 import { useEffect } from "react"
 import { useCookies } from "react-cookie"
 import { useNavigate } from "react-router-dom"
+import { isExpired } from "react-jwt"
 
 function App() {
 	const [cookies] = useCookies(["token"])
@@ -12,6 +13,8 @@ function App() {
 
 	useEffect(() => {
 		if (!cookies.token) navigate("/login")
+		const isMyTokenExpired = isExpired(cookies.token)
+		isMyTokenExpired && navigate("/login")
 	}, [cookies, navigate])
 
 	return (
