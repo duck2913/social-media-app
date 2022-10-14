@@ -4,8 +4,9 @@ import { useMutation } from "@tanstack/react-query"
 import { useNavigate, Link } from "react-router-dom"
 import { Loader } from "@mantine/core"
 import { useCookies } from "react-cookie"
-import { GoogleLogin } from "@react-oauth/google"
-import jwt_decode from "jwt-decode"
+import { FcGoogle } from "react-icons/fc"
+import { Card, TextInput, Button } from "@mantine/core"
+import { useGoogleLogin } from "@react-oauth/google"
 
 const Login = () => {
 	const nameRef = useRef()
@@ -21,14 +22,39 @@ const Login = () => {
 		mutate({ name, password })
 	}
 
+	const googleLogin = useGoogleLogin({
+		onSuccess: async (tokenResponse) => {
+			const info = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+				headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+			})
+			console.log("🚀 -> file: Login.jsx -> line 31 -> info", info)
+			const { email, name, picture } = info.data
+			const result = await axios.post(`http://localhost:4000/auth/oauth`, {
+				name,
+				picture,
+				email,
+			})
+			const { token, user } = result.data
+			if (!token) {
+				setMsg("please try google login! you have not registered or there is a problem")
+				return
+			}
+			setCookie("token", token)
+			localStorage.setItem("user", JSON.stringify(user))
+			navigate("/")
+		},
+	})
+
+	// login for username and password
 	const { mutate, isLoading, isError } = useMutation(
 		(data) => {
 			return axios.post("http://localhost:4000/auth/login", data)
 		},
 		{
 			onSuccess: (data) => {
-				const token = data.data.token
+				const { token, user } = data.data
 				setCookie("token", token)
+				localStorage.setItem("user", JSON.stringify(user))
 				navigate("/")
 			},
 			onError: (error) => {
@@ -37,62 +63,47 @@ const Login = () => {
 		},
 	)
 
-	async function googleSignIn(credentialResponse) {
-		const { credential } = credentialResponse
-		const data = jwt_decode(credential)
-		const { name, picture, email } = data
-		const result = await axios.post(`http://localhost:4000/auth/oauth`, {
-			name,
-			picture,
-			email,
-		})
-		const { token } = result.data
-		if (!token) {
-			setMsg("google login failed")
-			return
-		}
-		setCookie("token", token)
-		navigate("/")
-	}
-
 	return (
-		<div className="h-screen flex flex-col justify-center items-center bg-gray-100">
-			<form className="form bg-white p-5 rounded-xl px-20" onSubmit={handleLogin}>
-				{isLoading && <Loader />}
-				<h1 className="text-xl font-semibold text-blue-500 mb-10">Login</h1>
-				{isError && <p className="text-red-400">{msg}</p>}
-				<p className="mb-1">Name</p>
-				<input
-					type="text"
-					ref={nameRef}
-					className="border-blue-200 border-[2px] rounded-md px-2 mb-5 focus:outline-none focus:border-blue-500 w-full"
-				/>
-				<p className="mb-1">Password</p>
-				<input
-					type="password"
-					ref={passwordRef}
-					className="border-blue-200 border-[2px] rounded-md px-4 mb-8 focus:outline-none focus:border-blue-500 w-full"
-				/>
-				<button className="mx-auto block font-semibold bg-indigo-500 py-1 px-3 text-white rounded-md">
-					Login
-				</button>
-				{/* oauth */}
-				<div className="my-4">
-					<GoogleLogin
-						onSuccess={googleSignIn}
-						onError={() => {
-							console.log("Login Failed")
-						}}
-						className="w-full"
+		<div className="h-screen flex flex-col justify-center items-center">
+			<form onSubmit={handleLogin}>
+				<Card className="p-5 rounded-xl px-20">
+					{isLoading && <Loader />}
+					<h1 className="text-xl font-semibold text-blue-500 mb-10">Login</h1>
+					{isError && <p className="text-red-400">{msg}</p>}
+					<p className="mb-1">Name</p>
+					<TextInput
+						type="text"
+						ref={nameRef}
+						className="rounded-md px-2 mb-5 focus:outline-none w-full"
 					/>
-				</div>
-				{/*  */}
-				<p className="text-sm text-gray-500 mt-3 text-center">
-					Don't have an account?{" "}
-					<span className="text-blue-700 font-semibold">
-						<Link to={"/signup"}>Sign up</Link>
-					</span>
-				</p>
+					<p className="mb-1">Password</p>
+					<TextInput
+						type="password"
+						ref={passwordRef}
+						className="rounded-md px-2 mb-8 focus:outline-none w-full"
+					/>
+					<button className="mx-auto block font-semibold bg-indigo-500 py-1 px-3 text-white rounded-md">
+						Login
+					</button>
+					{/* oauth */}
+					<div className="my-4">
+						<Button
+							variant="light"
+							className="mt-3 w-full bg-[#426bb7b4] flex text-center"
+							onClick={() => googleLogin()}
+						>
+							<FcGoogle className="text-[1.2rem]" />
+							<p className="ml-3">Sign in with Google</p>
+						</Button>
+					</div>
+					{/*  */}
+					<p className="text-sm text-gray-500 mt-3 text-center">
+						Don't have an account?{" "}
+						<span className="text-blue-400 font-semibold">
+							<Link to={"/signup"}>Sign up</Link>
+						</span>
+					</p>
+				</Card>
 			</form>
 		</div>
 	)

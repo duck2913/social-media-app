@@ -1,3 +1,4 @@
+import { Card, TextInput } from "@mantine/core"
 import React from "react"
 import { HiPhotograph } from "react-icons/hi"
 import { HiVideoCamera } from "react-icons/hi"
@@ -6,17 +7,17 @@ import { HiCalendar } from "react-icons/hi"
 
 const NewPost = () => {
 	return (
-		<div className="w-full bg-white rounded-xl p-5 mb-8">
+		<Card className="w-full rounded-xl p-5 mb-8">
 			<div className="flex gap-4 items-center">
 				<img
 					src="https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGFic3RyYWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
 					alt=""
 					className="w-[3rem] h-[3rem] rounded-full inline"
 				/>
-				<input
+				<TextInput
 					type="text"
 					placeholder="What's happening"
-					className="w-full p-2 px-4 bg-slate-100 rounded-xl focus:outline-none text-slate-400"
+					className="w-full rounded-xl focus:outline-none"
 				/>
 			</div>
 			<div className="options mt-4 flex justify-center gap-8 font-semibold">
@@ -41,7 +42,7 @@ const NewPost = () => {
 					Share
 				</button>
 			</div>
-		</div>
+		</Card>
 	)
 }
 

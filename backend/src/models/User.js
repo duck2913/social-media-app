@@ -8,13 +8,13 @@ class User {
 			if (!hash) {
 				const hash = await bcrypt.hash(password, saltRounds)
 				await db.any(
-					`insert into Users(fullname,username,email, password) values ($1, $2, $3, $4)`,
-					[fullname, username, email, hash],
+					`insert into Users(fullname,username,email, password,tag) values ($1, $2, $3, $4, $5)`,
+					[fullname, username, email, hash, "@" + username],
 				)
 			} else {
 				await db.any(
-					`insert into Users(fullname,username,email, password) values ($1, $2, $3, $4)`,
-					[fullname, username, email, hash],
+					`insert into Users(fullname,username,email, password,tag) values ($1, $2, $3, $4,$5)`,
+					[fullname, username, email, hash, "@" + username],
 				)
 			}
 		} catch (error) {
@@ -31,25 +31,20 @@ class User {
 			)
 		} catch (error) {
 			console.log(error)
-		}
-	}
-
-	static async findByEmail(email) {
-		try {
-			return await db.any("select * from Users where email = $1", email)
-		} catch (error) {
-			console.log(error)
+			throw error
 		}
 	}
 
 	static async findByEmailOrName(email, username) {
 		try {
-			return await db.any("select * from Users where email = $1 or username = $2", [
-				email,
-				username,
-			])
+			const queryResult = await db.any(
+				"select user_id,fullname,tag,title,avatar_url from Users where email = $1 or username = $2",
+				[email, username],
+			)
+			return queryResult[0]
 		} catch (error) {
 			console.log(error)
+			throw error
 		}
 	}
 

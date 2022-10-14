@@ -6,7 +6,7 @@ import { useEffect } from "react"
 import { useCookies } from "react-cookie"
 import { useNavigate } from "react-router-dom"
 import { isExpired } from "react-jwt"
-
+import { Card } from "@mantine/core"
 function App() {
 	const [cookies] = useCookies(["token"])
 	const navigate = useNavigate()
@@ -18,16 +18,16 @@ function App() {
 	}, [cookies, navigate])
 
 	return (
-		<div className="bg-gray-100">
+		<>
 			<div className="App ">
-				<div className="blur top-[3rem] right-[4rem] bg-sky-200"></div>
-				<div className="blur bottom-0 bg-pink-200"></div>
+				<div className="blur top-[3rem] right-[4rem] bg-sky-400"></div>
+				<div className="blur bottom-0 bg-pink-700"></div>
 				{/* main */}
 				<LeftPanel />
 				<FeedsPanel />
 				<RightPanel />
 			</div>
-		</div>
+		</>
 	)
 }
 

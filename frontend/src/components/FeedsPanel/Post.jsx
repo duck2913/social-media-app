@@ -1,6 +1,7 @@
 import React from "react"
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
 import { AiOutlineMessage } from "react-icons/ai"
+import { Card } from "@mantine/core"
 
 const comments = [
 	{
@@ -11,7 +12,7 @@ const comments = [
 
 const Post = () => {
 	return (
-		<div className="w-full bg-white p-5 rounded-xl">
+		<Card className="rounded-xl">
 			<img
 				src="https://images.unsplash.com/photo-1665149368357-864968813478?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60"
 				alt="post"
@@ -31,7 +32,7 @@ const Post = () => {
 					</div>
 				))}
 			</div>
-		</div>
+		</Card>
 	)
 }
 

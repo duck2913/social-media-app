@@ -1,6 +1,7 @@
 import React from "react"
 import { useCookies } from "react-cookie"
 import { BiLogOut } from "react-icons/bi"
+import { Card } from "@mantine/core"
 
 const trends = [
 	{
@@ -21,7 +22,7 @@ const RightPanel = () => {
 
 	return (
 		<div className="h-screen p-4">
-			<div className="bg-white rounded-xl p-10 relative">
+			<Card className="rounded-xl p-10 relative">
 				<h1 className="font-semibold text-xl mb-5 text-blue-500">Trends for you</h1>
 				<div className="flex flex-col gap-4">
 					{trends.map((trend) => (
@@ -32,9 +33,9 @@ const RightPanel = () => {
 					))}
 				</div>
 				<div onClick={logoutHandler}>
-					<BiLogOut className="absolute right-5 top-5 w-[2rem] h-[2rem] bg-purple-200 rounded-full p-1 cursor-pointer active:-translate-y-2 transition-all" />
+					<BiLogOut className="absolute right-5 top-5 w-[2rem] h-[2rem] bg-purple-400 rounded-full p-1 cursor-pointer active:-translate-y-2 transition-all text-purple-600" />
 				</div>
-			</div>
+			</Card>
 		</div>
 	)
 }
