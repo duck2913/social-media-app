@@ -59,6 +59,21 @@ class User {
 			throw error
 		}
 	}
+
+	static async getFollowersAndFollowing(user_id) {
+		try {
+			const followers = await db.any(
+				"select user_id, fullname, tag,avatar_url from users where user_id in ( select id from Follows where following = $1)",
+				user_id,
+			)
+			const res = await db.any("select following from Follows where id = $1", user_id)
+			const following = res.map((item) => ({ id: item.following }))
+			return [followers, following]
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
 }
 
 module.exports = User

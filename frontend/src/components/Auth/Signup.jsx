@@ -72,7 +72,7 @@ const Signup = () => {
 				</Notification>
 			)}
 			<form onSubmit={handleSubmit}>
-				<Card className="form p-5 rounded-xl w-[20rem]">
+				<Card className="form p-5 rounded-xl w-[25rem]">
 					{isLoading && <Loader />}
 					<h1 className="text-xl font-semibold text-blue-500 mb-10">Sign up</h1>
 					{msg && <p className="my-1 text-red-500">{msg}</p>}

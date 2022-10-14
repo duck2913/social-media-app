@@ -3,6 +3,7 @@ import { FiEdit } from "react-icons/fi"
 import { Modal } from "@mantine/core"
 import { useState } from "react"
 import { Card } from "@mantine/core"
+import { useEffect } from "react"
 
 const defaultValues = {
 	avatar_url:
@@ -13,9 +14,13 @@ const defaultValues = {
 }
 
 const Info = () => {
-	const user = JSON.parse(localStorage.getItem("user")) || defaultValues
-	console.log("🚀 -> file: Info.jsx -> line 16 -> user", user)
 	const [openEditModal, setOpenEditModal] = useState(false)
+	const [user, setUser] = useState({})
+
+	useEffect(() => {
+		const localUser = JSON.parse(localStorage.getItem("user")) || defaultValues
+		setUser(localUser)
+	}, [])
 
 	return (
 		<Card className="w-[100%] relative rounded-2xl overflow-hidden flex flex-col items-center mb-[2rem] p-0">

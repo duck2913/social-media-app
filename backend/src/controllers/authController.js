@@ -47,6 +47,10 @@ const postSignup = async (req, res) => {
 		{ expiresIn: 60 * 5 },
 	)
 
+	// just for testing so we can skip verify through email to register
+	// await User.addUser(fullname, username, email, password)
+
+	//
 	transporter.sendMail({
 		from: "minhducdl1010@gmail.com",
 		to: `${email}`,
@@ -54,6 +58,7 @@ const postSignup = async (req, res) => {
 		html: `<p>Hello ${fullname}! This is your confirmation link: http://localhost:4000/auth/signup/${token}
          Please click on the link to finish the registration</p>`,
 	})
+	console.log("🚀 -> file: authController.js -> line 61 -> transporter", transporter)
 	res.json("please confirm email to complete registration")
 }
 

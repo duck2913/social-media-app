@@ -10,7 +10,7 @@ const cookieParser = require("cookie-parser")
 const port = process.env.PORT || 4000
 const errorHandler = require("../middlewares/errorHandler")
 const authRouter = require("./routers/authRouter")
-
+const usersRouter = require("./routers/usersRoutes")
 // middleware
 app.use(cors())
 app.use(cookieParser())
@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // routes
 app.use("/auth", authRouter)
+app.use("/users", usersRouter)
 
 // error handler
 app.use(errorHandler)

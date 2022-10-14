@@ -14,7 +14,7 @@ const trends = [
 ]
 
 const RightPanel = () => {
-	const [cookies, setCookie, removeCookie] = useCookies(["token"])
+	const [, , removeCookie] = useCookies(["token"])
 
 	function logoutHandler() {
 		removeCookie("token")

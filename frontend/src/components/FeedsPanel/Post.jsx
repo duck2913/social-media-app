@@ -6,7 +6,7 @@ import { Card } from "@mantine/core"
 const comments = [
 	{
 		from: "bi",
-		message: "dep vai lon",
+		message: "be xiu yeu thien than ",
 	},
 ]
 
