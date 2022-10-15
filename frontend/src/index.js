@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { MantineProvider } from "@mantine/core"
 import { CookiesProvider } from "react-cookie"
 import { GoogleOAuthProvider } from "@react-oauth/google"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
 const queryClient = new QueryClient()
 
@@ -34,6 +35,7 @@ root.render(
 			<MantineProvider withGlobalStyles theme={{ colorScheme: "dark" }}>
 				<QueryClientProvider client={queryClient}>
 					<RouterProvider router={router} />
+					<ReactQueryDevtools initialIsOpen={false} />
 				</QueryClientProvider>
 			</MantineProvider>
 		</CookiesProvider>

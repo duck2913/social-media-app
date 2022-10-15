@@ -2,33 +2,38 @@ import React from "react"
 import { TextInput, FileInput, Title } from "@mantine/core"
 import { useRef, useState } from "react"
 import axios from "axios"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 const EditModal = ({ setOpenEditModal }) => {
 	const nameRef = useRef()
 	const titleRef = useRef()
-	const {
-		fullname: currentName,
-		avatar_url: currentAvatar,
-		title: currentTitle,
-	} = JSON.parse(localStorage.getItem("user"))
-	const [avatar, setAvatar] = useState(currentAvatar)
+	const [avatar, setAvatar] = useState()
 
 	function handleChangeInfo() {
-		const newFullName = nameRef.current.value || currentName
-		const newTitle = titleRef.current.value || currentTitle
+		const newFullName = nameRef.current.value
+		const newTitle = titleRef.current.value
 		const formData = new FormData()
 		const { user_id } = JSON.parse(localStorage.getItem("user"))
 
-		formData.append("avatar", avatar)
-		formData.append("newFullName", newFullName)
-		formData.append("newTitle", newTitle)
+		avatar && formData.append("avatar", avatar)
+		newFullName && formData.append("newFullName", newFullName)
+		newTitle && formData.append("newTitle", newTitle)
 		formData.append("user_id", user_id)
 
-		axios.put("http://localhost:4000/users/update", formData).then((res) => {
-			console.log(res)
-		})
+		mutate(formData)
 		setOpenEditModal(false)
 	}
+
+	function updateInfo(formData) {
+		return axios.put("http://localhost:4000/users/update", formData)
+	}
+
+	const queryClient = useQueryClient()
+	const { mutate } = useMutation(updateInfo, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["user-profile"])
+		},
+	})
 
 	return (
 		<>

@@ -27,7 +27,6 @@ const Login = () => {
 			const info = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
 				headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
 			})
-			console.log("🚀 -> file: Login.jsx -> line 31 -> info", info)
 			const { email, name, picture } = info.data
 			const result = await axios.post(`http://localhost:4000/auth/oauth`, {
 				name,

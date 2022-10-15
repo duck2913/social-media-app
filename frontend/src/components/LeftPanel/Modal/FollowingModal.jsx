@@ -1,10 +1,10 @@
 import { Title } from "@mantine/core"
 import React from "react"
-import { useUserStore } from "../../../store/userStore"
+import useFollowersAndFollowings from "../../../hooks/useFollowersAndFollowings"
 import FollowingCard from "../FollowingCard"
 
 const FollowingModal = () => {
-	const followings = useUserStore((state) => state.followings)
+	const follows = useFollowersAndFollowings()
 
 	return (
 		<>
@@ -12,7 +12,7 @@ const FollowingModal = () => {
 				People that you follow
 			</Title>
 			<div className="flex flex-col gap-2">
-				{followings.map((following) => (
+				{follows?.followings.map((following) => (
 					<FollowingCard following={following} />
 				))}
 			</div>
