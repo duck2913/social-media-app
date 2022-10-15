@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt")
 const User = require("../models/User")
 const transporter = require("../../utils/mailTransporter")
 
+
+
 const postLogin = async (req, res) => {
 	const username = req.body.name
 	const password = req.body.password
@@ -47,18 +49,23 @@ const postSignup = async (req, res) => {
 		{ expiresIn: 60 * 5 },
 	)
 
-	// just for testing so we can skip verify through email to register
-	// await User.addUser(fullname, username, email, password)
-
-	//
-	transporter.sendMail({
-		from: "minhducdl1010@gmail.com",
-		to: `${email}`,
-		subject: "Confirm registration",
-		html: `<p>Hello ${fullname}! This is your confirmation link: http://localhost:4000/auth/signup/${token}
-         Please click on the link to finish the registration</p>`,
-	})
-	console.log("🚀 -> file: authController.js -> line 61 -> transporter", transporter)
+	transporter
+		.sendTransacEmail({
+			subject: "Email confirmation",
+			sender: { email: "api@sendinblue.com", name: "AppCuaBi" },
+			replyTo: { email: "api@sendinblue.com", name: "Sendinblue" },
+			to: [{ name: fullname, email: email }],
+			htmlContent: `<p>Chào bé xiu! Click vào <a href="http://localhost:4000/auth/signup/${token}">link</a> để hoàn thành đăng nhập </p>`,
+			params: { bodyMessage: "Made just for you!" },
+		})
+		.then(
+			function (data) {
+				console.log(data)
+			},
+			function (error) {
+				console.error(error)
+			},
+		)
 	res.json("please confirm email to complete registration")
 }
 

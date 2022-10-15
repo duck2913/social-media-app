@@ -1,10 +1,5 @@
-const nodemailer = require("nodemailer")
-const nodemailerSendgrid = require("nodemailer-sendgrid")
+const SibApiV3Sdk = require("sib-api-v3-sdk")
+SibApiV3Sdk.ApiClient.instance.authentications["api-key"].apiKey = process.env.SIB_API_KEY
+const transporter = new SibApiV3Sdk.TransactionalEmailsApi()
 
-const transport = nodemailer.createTransport(
-	nodemailerSendgrid({
-		apiKey: process.env.SENDGRID_API_KEY,
-	}),
-)
-
-module.exports = transport
+module.exports = transporter
