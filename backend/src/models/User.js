@@ -76,6 +76,15 @@ class User {
 			throw error
 		}
 	}
+
+	static async updateUserInfo(newFullname, newTitle, newAvatar_Url, user_id) {
+        try {
+            return await db.any('update Users set fullname = $1, title = $2, avatar_url = $3 where user_id = $4 ', [newFullname, newTitle, newAvatar_Url, user_id])
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
 }
 
 module.exports = User

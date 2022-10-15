@@ -1,18 +1,32 @@
 import React from "react"
 import { TextInput, FileInput, Title } from "@mantine/core"
 import { useRef, useState } from "react"
+import axios from "axios"
 
 const EditModal = ({ setOpenEditModal }) => {
 	const nameRef = useRef()
 	const titleRef = useRef()
-	const [avatar, setAvatar] = useState()
+	const {
+		fullname: currentName,
+		avatar_url: currentAvatar,
+		title: currentTitle,
+	} = JSON.parse(localStorage.getItem("user"))
+	const [avatar, setAvatar] = useState(currentAvatar)
 
 	function handleChangeInfo() {
-		const newFullName = nameRef.current.value
-		console.log("🚀 -> file: EditModal.jsx -> line 12 -> newFullName", newFullName)
-		const newTitle = titleRef.current.value
-		console.log("🚀 -> file: EditModal.jsx -> line 14 -> newTitle", newTitle)
-		console.log(avatar)
+		const newFullName = nameRef.current.value || currentName
+		const newTitle = titleRef.current.value || currentTitle
+		const formData = new FormData()
+		const { user_id } = JSON.parse(localStorage.getItem("user"))
+
+		formData.append("avatar", avatar)
+		formData.append("newFullName", newFullName)
+		formData.append("newTitle", newTitle)
+		formData.append("user_id", user_id)
+
+		axios.put("http://localhost:4000/users/update", formData).then((res) => {
+			console.log(res)
+		})
 		setOpenEditModal(false)
 	}
 
@@ -38,7 +52,7 @@ const EditModal = ({ setOpenEditModal }) => {
 			</div>
 
 			<button
-				className="block mx-auto mt-5 bg-[#1A2D3F] text-blue-300 py-1 px-2 rounded-lg"
+				className="block mx-auto mt-5 bg-[#1A2D3F] text-blue-300 py-1 px-2 rounded-lg active:translate-y-1 font-semibold"
 				onClick={handleChangeInfo}
 			>
 				Submit

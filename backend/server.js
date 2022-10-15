@@ -7,16 +7,17 @@ const express = require("express")
 const app = express()
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
+const path = require("path")
 const port = process.env.PORT || 4000
-const errorHandler = require("../middlewares/errorHandler")
-const authRouter = require("./routers/authRouter")
-const usersRouter = require("./routers/usersRoutes")
+const errorHandler = require("./middlewares/errorHandler")
+const authRouter = require("./src/routers/authRouter")
+const usersRouter = require("./src/routers/usersRoutes")
 // middleware
 app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
+app.use(express.static(path.join(__dirname, "uploads")))
 // routes
 app.use("/auth", authRouter)
 app.use("/users", usersRouter)
