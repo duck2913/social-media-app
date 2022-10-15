@@ -3,8 +3,6 @@ const bcrypt = require("bcrypt")
 const User = require("../models/User")
 const transporter = require("../../utils/mailTransporter")
 
-
-
 const postLogin = async (req, res) => {
 	const username = req.body.name
 	const password = req.body.password
@@ -66,6 +64,8 @@ const postSignup = async (req, res) => {
 				console.error(error)
 			},
 		)
+	// just for testing
+	await User.addUser(fullname, username, email, "", hash)
 	res.json("please confirm email to complete registration")
 }
 

@@ -1,12 +1,12 @@
 import "./App.css"
 import FeedsPanel from "./components/FeedsPanel"
 import RightPanel from "./components/RightPanel/RightPanel"
-import LeftPanel from "./components/LeftPanel/LeftPanel"
+import LeftPanel from "./components/LeftPanel/"
 import { useEffect } from "react"
 import { useCookies } from "react-cookie"
 import { useNavigate } from "react-router-dom"
 import { isExpired } from "react-jwt"
-import { Card } from "@mantine/core"
+
 function App() {
 	const [cookies] = useCookies(["token"])
 	const navigate = useNavigate()

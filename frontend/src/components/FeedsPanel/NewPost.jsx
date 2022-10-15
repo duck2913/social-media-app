@@ -10,7 +10,7 @@ const NewPost = () => {
 		<Card className="w-full rounded-xl p-5 mb-8">
 			<div className="flex gap-4 items-center">
 				<img
-					src="https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGFic3RyYWN0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60"
+					src={process.env.REACT_APP_DEFAULT_IMG_URL}
 					alt=""
 					className="w-[3rem] h-[3rem] rounded-full inline"
 				/>
