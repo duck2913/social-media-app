@@ -110,6 +110,15 @@ class User {
 			throw error
 		}
 	}
+
+	static async getAllUsers() {
+		try {
+			return await db.any("select fullname,tag,avatar_url, user_id from Users")
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
 }
 
 module.exports = User

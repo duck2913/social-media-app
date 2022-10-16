@@ -12,4 +12,6 @@ router.get("/follows/:user_id", usersController.getUserFollowersAndFollowing)
 
 router.put("/update", upload.single("avatar"), usersController.postUpdateUser)
 
+router.get("/suggest/:user_id", usersController.getSuggestedPeople)
+
 module.exports = router

@@ -20,14 +20,14 @@ const FollowerCard = (props) => {
 			</div>
 			{followings?.findIndex((item) => item.user_id === follower.user_id) === -1 ? (
 				<button
-					className="ml-auto font-bold bg-gradient-to-r from-purple-600  to-pink-500 text-white px-2 py-1 rounded-lg active:-translate-y-2 transition-all w-[5.5rem] hover:scale-105"
+					className="ml-auto font-bold bg-gradient-to-r from-purple-600  to-pink-500 text-white px-2 py-1 rounded-lg active:-translate-y-2 transition-all hover:scale-105 w-[5rem]"
 					onClick={handleFollow}
 				>
 					Follow
 				</button>
 			) : (
 				<button
-					className="ml-auto font-bold bg-purple-500 text-purple-800 px-2 py-1 rounded-lg active:-translate-y-2 transition-all hover:scale-105"
+					className="ml-auto font-bold bg-[#572a64] text-indigo-400 px-2 py-1 rounded-lg active:-translate-y-2 transition-all hover:scale-105 w-[5rem]"
 					onClick={handleUnfollow}
 				>
 					Unfollow

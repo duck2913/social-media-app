@@ -1,6 +1,6 @@
 import "./App.css"
 import FeedsPanel from "./components/FeedsPanel"
-import RightPanel from "./components/RightPanel/RightPanel"
+import RightPanel from "./components/RightPanel/"
 import LeftPanel from "./components/LeftPanel/"
 import { useEffect } from "react"
 import { useCookies } from "react-cookie"

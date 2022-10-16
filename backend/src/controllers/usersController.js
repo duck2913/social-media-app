@@ -1,3 +1,4 @@
+const db = require("../../database/config")
 const User = require("../models/User")
 
 const getUserFollowersAndFollowing = async (req, res) => {
@@ -25,8 +26,23 @@ const getUserInfo = async (req, res) => {
 	res.status(200).json(user)
 }
 
+const getSuggestedPeople = async (req, res) => {
+	const { user_id: myId } = req.params
+	console.log("🚀 -> file: usersController.js -> line 31 -> user_id", myId)
+	const allUsers = await User.getAllUsers()
+	if (!allUsers) return res.status(400).json("can't get all users")
+	const [, followings] = await User.getFollowersAndFollowing(myId)
+	if (!followings) return res.status(400).json("can't get list of followings")
+	const listOfFollowingsId = followings.map((person) => person.user_id)
+	const suggestedPeople = allUsers
+		.filter((user) => user.user_id != myId)
+		.filter((user) => !listOfFollowingsId.includes(user.user_id))
+	res.status(200).json(suggestedPeople)
+}
+
 module.exports = {
 	getUserFollowersAndFollowing,
 	postUpdateUser,
 	getUserInfo,
+	getSuggestedPeople,
 }

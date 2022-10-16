@@ -15,7 +15,7 @@ const FollowingCard = ({ following }) => {
 				<p className="text-sm">{following.tag}</p>
 			</div>
 			<button
-				className="ml-auto font-bold bg-purple-500 text-purple-800 px-2 py-1 rounded-lg active:-translate-y-2 transition-all hover:scale-105"
+				className="ml-auto font-bold  bg-[#2a4a64] text-blue-400 px-2 py-1 rounded-lg active:-translate-y-2 transition-all hover:scale-105"
 				onClick={handleUnfollow}
 			>
 				Unfollow
