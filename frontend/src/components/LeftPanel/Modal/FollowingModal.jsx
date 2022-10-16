@@ -1,10 +1,10 @@
 import { Title } from "@mantine/core"
 import React from "react"
-import useFollowersAndFollowings from "../../../hooks/useFollowersAndFollowings"
+import useGetFollowersAndFollowings from "../../../hooks/useGetFollowersAndFollowings"
 import FollowingCard from "../FollowingCard"
 
 const FollowingModal = () => {
-	const follows = useFollowersAndFollowings()
+	const follows = useGetFollowersAndFollowings()
 
 	return (
 		<>
@@ -13,7 +13,7 @@ const FollowingModal = () => {
 			</Title>
 			<div className="flex flex-col gap-2">
 				{follows?.followings.map((following) => (
-					<FollowingCard following={following} />
+					<FollowingCard following={following} key={following.user_id} />
 				))}
 			</div>
 		</>

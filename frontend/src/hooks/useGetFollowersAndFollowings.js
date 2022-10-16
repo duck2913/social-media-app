@@ -7,9 +7,9 @@ async function getFollowersAndFollowing() {
 	return res.data
 }
 
-const useFollowersAndFollowings = () => {
+const useGetFollowersAndFollowings = () => {
 	const { data } = useQuery(["followers and followings"], getFollowersAndFollowing)
 	return data
 }
 
-export default useFollowersAndFollowings
+export default useGetFollowersAndFollowings

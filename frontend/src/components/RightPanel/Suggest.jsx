@@ -16,7 +16,8 @@ const Suggest = () => {
 		<Card className="rounded-xl">
 			<h1 className="font-semibold text-lg text-blue-400 p-3 mb-4">People you might know</h1>
 			<div className="flex flex-col gap-4">
-				{data && data.data.map((person) => <SuggestCard person={person} />)}
+				{data &&
+					data.data.map((person) => <SuggestCard person={person} key={person.user_id} />)}
 			</div>
 		</Card>
 	)

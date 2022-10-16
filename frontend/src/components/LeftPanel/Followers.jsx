@@ -1,10 +1,10 @@
 import React from "react"
 import "../../App.css"
 import FollowerCard from "./FollowerCard"
-import useFollowersAndFollowings from "../../hooks/useFollowersAndFollowings"
+import useGetFollowersAndFollowings from "../../hooks/useGetFollowersAndFollowings"
 
 const Followers = () => {
-	const data = useFollowersAndFollowings()
+	const data = useGetFollowersAndFollowings()
 
 	return (
 		<div>
@@ -15,7 +15,7 @@ const Followers = () => {
 						<FollowerCard
 							follower={item}
 							followings={data?.followings}
-							id={item.user_id}
+							key={item.user_id}
 						/>
 					))}
 				</div>

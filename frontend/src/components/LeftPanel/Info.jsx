@@ -6,7 +6,7 @@ import { Card } from "@mantine/core"
 import FollowingModal from "./Modal/FollowingModal"
 import EditModal from "./Modal/EditModal"
 import useUser from "../../hooks/useUser"
-import useFollowersAndFollowings from "../../hooks/useFollowersAndFollowings"
+import useGetFollowersAndFollowings from "../../hooks/useGetFollowersAndFollowings"
 
 const defaultValues = {
 	title: "code dạo",
@@ -19,7 +19,7 @@ const Info = () => {
 	const [openFollowingModal, setOpenFollowingModal] = useState(false)
 
 	const user = useUser()
-	const follows = useFollowersAndFollowings()
+	const follows = useGetFollowersAndFollowings()
 
 	return (
 		<>

@@ -119,6 +119,24 @@ class User {
 			throw error
 		}
 	}
+
+	static async follow(myId, followId) {
+		try {
+			await db.any("insert into follows(id, following) values($1, $2)", [myId, followId])
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
+
+	static async unfollow(myId, unfollowId) {
+		try {
+			await db.any("delete from follows where id = $1 and following = $2", [myId, unfollowId])
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
 }
 
 module.exports = User

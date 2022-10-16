@@ -23,7 +23,7 @@ const Trends = () => {
 			<h1 className="font-semibold text-xl mb-3 text-blue-500">Trends for you</h1>
 			<div className="flex flex-col gap-3">
 				{trends.map((trend) => (
-					<div id={trend.name}>
+					<div key={(Math.random() + 1).toString(36).substring(7)}>
 						<p className="font-semibold">#{trend.name}</p>
 						<p className="text-sm">{trend.num}k shares</p>
 					</div>
