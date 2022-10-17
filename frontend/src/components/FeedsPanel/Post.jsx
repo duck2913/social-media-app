@@ -10,7 +10,7 @@ const comments = [
 	},
 ]
 
-const Post = () => {
+const Post = (post) => {
 	return (
 		<Card className="rounded-xl">
 			<img

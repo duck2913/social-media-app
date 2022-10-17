@@ -12,15 +12,19 @@ const port = process.env.PORT || 4000
 const errorHandler = require("./middlewares/errorHandler")
 const authRouter = require("./src/routers/authRouter")
 const usersRouter = require("./src/routers/usersRoutes")
+const postsRouter = require("./src/routers/postsRouter")
+
 // middleware
 app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, "uploads")))
+
 // routes
 app.use("/auth", authRouter)
 app.use("/users", usersRouter)
+app.use("/posts", postsRouter)
 
 // error handler
 app.use(errorHandler)
