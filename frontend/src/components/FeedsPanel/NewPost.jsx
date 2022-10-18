@@ -1,5 +1,5 @@
 import { Card, TextInput } from "@mantine/core"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import React, { useRef, useState } from "react"
 import { HiPhotograph } from "react-icons/hi"
@@ -7,11 +7,13 @@ import { HiVideoCamera } from "react-icons/hi"
 import { HiOutlineLocationMarker } from "react-icons/hi"
 import { HiCalendar } from "react-icons/hi"
 import useUser from "../../hooks/useUser"
+
 const NewPost = () => {
 	const user = useUser()
 	const [statusMsg, setStatusMsg] = useState("")
 	const [previewImgUrl, setPreviewImgUrl] = useState("")
 	const postImgRef = useRef(null)
+	const queryClient = useQueryClient()
 
 	function handleUploadPostImg(e) {
 		setPreviewImgUrl(URL.createObjectURL(e.target.files[0]))
@@ -25,13 +27,26 @@ const NewPost = () => {
 	function handleAddNewPost() {
 		const postMsg = statusMsg
 		const postImg = postImgRef.current.files[0]
+		const { user_id } = JSON.parse(localStorage.getItem("user"))
 		if (!postMsg && !postImg) return
-		mutate({ postMsg, postImg })
+
+		const formData = new FormData()
+		formData.append("postMsg", postMsg)
+		formData.append("postImg", postImg)
+		formData.append("user_id", user_id)
+		mutate(formData)
 	}
 
-	const { mutate } = useMutation((data) => {
-		return axios.post("/posts/new-post", data)
-	})
+	const { mutate } = useMutation(
+		(formData) => {
+			return axios.post("/posts/new-post", formData)
+		},
+		{
+			onSuccess: () => {
+				queryClient.invalidateQueries("posts")
+			},
+		},
+	)
 
 	return (
 		<Card className="w-full rounded-xl p-5 mb-8">
@@ -54,6 +69,7 @@ const NewPost = () => {
 					<input
 						type="file"
 						id="postImg"
+						name="postImg"
 						className="hidden"
 						ref={postImgRef}
 						onChange={(e) => handleUploadPostImg(e)}

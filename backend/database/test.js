@@ -2,10 +2,11 @@ const db = require("./config")
 
 const execute = async () => {
 	try {
-		const query = await db.any("select username,user_id,fullname from users")
+		const query = await db.any(
+			"SELECT * FROM information_schema.tables WHERE table_schema = 'public';",
+		)
 		console.log("🚀 -> file: test.js -> line 6 -> query", query)
 	} catch (error) {
-		console.log("error")
 		console.log(error)
 	}
 }

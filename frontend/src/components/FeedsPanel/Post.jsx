@@ -10,14 +10,59 @@ const comments = [
 	},
 ]
 
-const Post = (post) => {
+function formatDate(date) {
+	const options = {
+		weekday: "long",
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	}
+	const formatted = new Intl.DateTimeFormat("vi-VI", options).format(date)
+	return formatted
+}
+
+function calcTimePass(date) {
+	const time = Math.round((Date.now() - date) / 1000)
+	console.log("🚀: calcTimePass -> time", time)
+	if (time <= 60) {
+		return `${time}s`
+	}
+	if (time <= 3600) {
+		return `${Math.round(time / 60)} phút`
+	}
+	if (time <= 3600 * 24) {
+		return `${Math.round(time / 60 / 60)}h`
+	}
+	if (time <= 86400 * 30) {
+		return `${Math.round(time / 60 / 60 / 24)} ngày`
+	}
+	if (time <= 86400 * 30 * 12) {
+		return `${Math.round(time / 60 / 60 / 24 / 30)} tháng`
+	}
+	if (time <= 86400 * 30 * 12 * 100) {
+		return `${Math.round(time / 60 / 60 / 24 / 30 / 12)} năm`
+	}
+}
+
+const Post = ({ post }) => {
 	return (
-		<Card className="rounded-xl">
-			<img
-				src="https://images.unsplash.com/photo-1665149368357-864968813478?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=600&q=60"
-				alt="post"
-				className="post rounded-xl mx-auto"
-			/>
+		<Card className="rounded-xl px-[1.5rem]">
+			<div className="flex gap-2 items-start mb-4">
+				<img
+					src={post.user_img_url}
+					alt="user"
+					className="w-[2rem] h-[2rem] rounded-full"
+				/>
+				<h1 className="font-bold text-gray-500">{post.user_tag}</h1>
+				<div className="ml-auto flex flex-col text-sm text-gray-500 items-end">
+					<p>{formatDate(new Date(post.created_at))}</p>
+					<p>{calcTimePass(new Date(post.created_at))} trước</p>
+				</div>
+			</div>
+			<p className="mb-4 text-lg">{post.content}</p>
+			{post.post_img_url && (
+				<img src={post.post_img_url} alt="post" className="post rounded-xl mx-auto" />
+			)}
 			<div className="buttons flex text-[1.5rem] mt-3 gap-3">
 				<AiFillHeart className="text-red-400" />
 				<AiOutlineHeart />
