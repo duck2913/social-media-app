@@ -45,6 +45,27 @@ class Post {
 			throw error
 		}
 	}
+
+	static async getLikedPostsId(userId) {
+		try {
+			return await db.any(`select post_id from likes where user_id = $1`, userId)
+		} catch (error) {
+			throw error
+		}
+	}
+
+	static async getLikesCount(postId) {
+		try {
+			const queryResult = await db.any(
+				"select count(user_id) from Likes where post_id = $1",
+				postId,
+			)
+			return queryResult[0].count
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
 }
 
 module.exports = Post

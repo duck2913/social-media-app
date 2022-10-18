@@ -29,9 +29,23 @@ const deleteUnlikeAPost = async (req, res) => {
 	res.json("test unlike")
 }
 
+const getListOfLikedPosts = async (req, res) => {
+	const { userId } = req.query
+	const likedPostsId = await Post.getLikedPostsId(+userId)
+	res.json(likedPostsId)
+}
+
+const getLikesCount = async (req, res) => {
+	const { postId } = req.params
+	const count = await Post.getLikesCount(postId)
+	res.json(count)
+}
+
 module.exports = {
 	postAddNewPost,
 	getAllPosts,
 	postLikeAPost,
 	deleteUnlikeAPost,
+	getListOfLikedPosts,
+	getLikesCount,
 }
