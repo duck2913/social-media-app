@@ -30,7 +30,7 @@ const Trends = () => {
 				))}
 			</div>
 			<div onClick={logoutHandler}>
-				<BiLogOut className="absolute right-5 top-5 w-[2rem] h-[2rem] bg-purple-400 rounded-full p-1 cursor-pointer active:-translate-y-2 transition-all text-purple-700 hover:-translate-y-1" />
+				<BiLogOut className="absolute right-5 top-5 w-[2rem] h-[2rem] bg-purple-400 rounded-full p-1 cursor-pointer active:-translate-y-2 transition-all text-purple-800 hover:-translate-y-1" />
 			</div>
 		</Card>
 	)

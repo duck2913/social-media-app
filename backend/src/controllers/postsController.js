@@ -17,7 +17,21 @@ const getAllPosts = async (_, res) => {
 	res.status(200).json(posts)
 }
 
+const postLikeAPost = async (req, res) => {
+	const { userId, postId } = req.body
+	await Post.likeAPost(userId, postId)
+	res.json("test like")
+}
+
+const deleteUnlikeAPost = async (req, res) => {
+	const { userId, postId } = req.body
+	await Post.unlikeAPost(userId, postId)
+	res.json("test unlike")
+}
+
 module.exports = {
 	postAddNewPost,
 	getAllPosts,
+	postLikeAPost,
+	deleteUnlikeAPost,
 }

@@ -8,4 +8,8 @@ router.get("/", postsController.getAllPosts)
 
 router.post("/new-post", upload.single("postImg"), postsController.postAddNewPost)
 
+router.post('/likes', postsController.postLikeAPost)
+
+router.delete('/unlikes', postsController.deleteUnlikeAPost)
+
 module.exports = router
