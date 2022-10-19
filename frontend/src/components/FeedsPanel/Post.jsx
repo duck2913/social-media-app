@@ -11,8 +11,12 @@ import { useRef } from "react"
 
 const Post = ({ post }) => {
 	const queryClient = useQueryClient()
-	const userId = JSON.parse(localStorage.getItem("user")).user_id
-	const userName = JSON.parse(localStorage.getItem("user")).fullname
+	const {
+		user_id: userId,
+		fullname: userName,
+		avatar_url: userImgUrl,
+	} = JSON.parse(localStorage.getItem("user"))
+
 	const postId = post.post_id
 	const commentRef = useRef()
 
@@ -27,7 +31,7 @@ const Post = ({ post }) => {
 	const handleAddComment = (e) => {
 		e.preventDefault()
 		const content = commentRef.current.value
-		mutateAddComment({ content, userName, postId })
+		mutateAddComment({ content, userName, postId, userImgUrl })
 		commentRef.current.value = ""
 	}
 
@@ -61,15 +65,18 @@ const Post = ({ post }) => {
 		return res.data
 	})
 
-	const { data: comments } = useQuery(["comments"], async () => {
+	const { data: comments } = useQuery(["comments", postId], async () => {
 		const res = await axios.get(`/posts/comments/${postId}`)
 		return res.data
 	})
-	console.log("🚀: comments", comments)
 
 	const { mutate: mutateAddComment } = useMutation(
 		(data) => axios.post("/posts/comments", data),
-		{},
+		{
+			onSuccess: () => {
+				queryClient.invalidateQueries("comments", postId)
+			},
+		},
 	)
 
 	return (
@@ -119,9 +126,16 @@ const Post = ({ post }) => {
 			</div>
 			<div className="p-3 px-6">
 				{comments?.map((comment) => (
-					<div className="flex gap-2 items-center" key={comment.user_name}>
-						<h3 className="font-semibold">{comment.user_name}</h3>
-						<p className="text-sm">{comment.content}</p>
+					<div className="flex gap-2 items-center mb-2" key={comment.user_name}>
+						<div className="flex items-center gap-1">
+							<img
+								src={comment.user_img_url}
+								alt="user"
+								className="w-[1rem] h-[1rem] rounded-full"
+							/>
+							<h3 className="font-semibold">{comment.user_name}:</h3>
+						</div>
+						<p className="text-xs">{comment.content}</p>
 					</div>
 				))}
 			</div>

@@ -76,12 +76,12 @@ class Post {
 		}
 	}
 
-	static async addComment(postId, content, userName) {
+	static async addComment(postId, content, userName, userImgUrl) {
 		try {
 			await db.any(
-				`insert into Comments(post_id, content, user_name)
-                values ($1, $2, $3)`,
-				[postId, content, userName],
+				`insert into Comments(post_id, content, user_name, user_img_url)
+                values ($1, $2, $3, $4)`,
+				[postId, content, userName, userImgUrl],
 			)
 		} catch (error) {
 			console.log(error)

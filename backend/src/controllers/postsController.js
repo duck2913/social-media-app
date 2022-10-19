@@ -50,8 +50,8 @@ const getAllComments = async (req, res) => {
 }
 
 const postAddComment = async (req, res) => {
-	const { content, userName, postId } = req.body
-	await Post.addComment(postId, content, userName)
+	const { content, userName, postId, userImgUrl } = req.body
+	await Post.addComment(postId, content, userName, userImgUrl)
 	res.status(200).json("add comment successfully")
 }
 
