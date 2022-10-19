@@ -41,6 +41,20 @@ const getLikesCount = async (req, res) => {
 	res.json(count)
 }
 
+const getAllComments = async (req, res) => {
+	const { postId } = req.params
+	const comments = await Post.getAllComments(postId)
+	console.log("🚀: getAllComments -> comments", comments)
+	if (!comments) res.status(400).json("can't get all comments")
+	res.status(200).json(comments)
+}
+
+const postAddComment = async (req, res) => {
+	const { content, userName, postId } = req.body
+	await Post.addComment(postId, content, userName)
+	res.status(200).json("add comment successfully")
+}
+
 module.exports = {
 	postAddNewPost,
 	getAllPosts,
@@ -48,4 +62,6 @@ module.exports = {
 	deleteUnlikeAPost,
 	getListOfLikedPosts,
 	getLikesCount,
+	getAllComments,
+	postAddComment,
 }

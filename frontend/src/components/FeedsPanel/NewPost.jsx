@@ -35,6 +35,8 @@ const NewPost = () => {
 		formData.append("postImg", postImg)
 		formData.append("user_id", user_id)
 		mutate(formData)
+		setStatusMsg("")
+		setPreviewImgUrl()
 	}
 
 	const { mutate } = useMutation(

@@ -23,7 +23,7 @@ class Post {
 
 	static async getAllPosts() {
 		try {
-			return await db.any("select * from Posts")
+			return await db.any("select * from Posts order by created_at desc")
 		} catch (error) {
 			console.log(error)
 			throw error
@@ -61,6 +61,28 @@ class Post {
 				postId,
 			)
 			return queryResult[0].count
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
+
+	static async getAllComments(postId) {
+		try {
+			return await db.any("select * from Comments where post_id = $1", postId)
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
+
+	static async addComment(postId, content, userName) {
+		try {
+			await db.any(
+				`insert into Comments(post_id, content, user_name)
+                values ($1, $2, $3)`,
+				[postId, content, userName],
+			)
 		} catch (error) {
 			console.log(error)
 			throw error

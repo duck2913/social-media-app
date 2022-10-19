@@ -2,8 +2,8 @@ const express = require("express")
 const router = express.Router()
 const postsController = require("../controllers/postsController")
 const upload = require("../../utils/multerUploader")
-// path: /posts
 
+// path: /posts
 router.get("/", postsController.getAllPosts)
 
 router.post("/new-post", upload.single("postImg"), postsController.postAddNewPost)
@@ -15,5 +15,9 @@ router.get("/likes", postsController.getListOfLikedPosts)
 router.get("/likes/count/:postId", postsController.getLikesCount)
 
 router.delete("/unlikes", postsController.deleteUnlikeAPost)
+
+router.get("/comments/:postId", postsController.getAllComments)
+
+router.post("/comments", postsController.postAddComment)
 
 module.exports = router
