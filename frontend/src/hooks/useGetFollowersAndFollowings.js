@@ -3,7 +3,7 @@ import axios from "axios"
 
 async function getFollowersAndFollowing() {
 	const { user_id } = JSON.parse(localStorage.getItem("user"))
-	const res = await axios.get(`http://localhost:4000/users/follows/${user_id}`)
+	const res = await axios.get(`/users/follows/${user_id}`)
 	return res.data
 }
 

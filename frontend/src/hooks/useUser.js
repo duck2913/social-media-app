@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 async function getUserInfo() {
 	const { user_id } = JSON.parse(localStorage.getItem("user"))
-	const res = await axios.get(`http://localhost:4000/users/${user_id}`)
+	const res = await axios.get(`/users/${user_id}`)
 	return res.data
 }
 

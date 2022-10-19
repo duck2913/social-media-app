@@ -28,7 +28,7 @@ const Login = () => {
 				headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
 			})
 			const { email, name, picture } = info.data
-			const result = await axios.post(`http://localhost:4000/auth/oauth`, {
+			const result = await axios.post(`/auth/oauth`, {
 				name,
 				picture,
 				email,
@@ -47,7 +47,7 @@ const Login = () => {
 	// login for username and password
 	const { mutate, isLoading, isError } = useMutation(
 		(data) => {
-			return axios.post("http://localhost:4000/auth/login", data)
+			return axios.post("/auth/login", data)
 		},
 		{
 			onSuccess: (data) => {

@@ -25,7 +25,7 @@ const EditModal = ({ setOpenEditModal }) => {
 	}
 
 	function updateInfo(formData) {
-		return axios.put("http://localhost:4000/users/update", formData)
+		return axios.put("/users/update", formData)
 	}
 
 	const queryClient = useQueryClient()

@@ -60,7 +60,7 @@ const Post = ({ post }) => {
 		return res?.data?.map((post) => post.post_id)
 	})
 
-	const { data: likesCount } = useQuery(["likesCount"], async () => {
+	const { data: likesCount } = useQuery(["likesCount", postId], async () => {
 		const res = await axios.get(`/posts/likes/count/${postId}`)
 		return res.data
 	})
@@ -124,7 +124,7 @@ const Post = ({ post }) => {
 			<div className="nums_likes text-sm text-gray-400 mt-2 font-semibold">
 				{likesCount} likes
 			</div>
-			<div className="p-3 px-6">
+			<div className="p-3">
 				{comments?.map((comment) => (
 					<div className="flex gap-2 items-center mb-2" key={comment.user_name}>
 						<div className="flex items-center gap-1">

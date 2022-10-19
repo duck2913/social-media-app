@@ -20,7 +20,7 @@ const Signup = () => {
 
 	const { mutate, isLoading, isError } = useMutation(
 		(data) => {
-			return axios.post(`http://localhost:4000/auth/signup`, data)
+			return axios.post(`/auth/signup`, data)
 		},
 		{
 			onSuccess: (data) => {

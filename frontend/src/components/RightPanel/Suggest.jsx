@@ -7,7 +7,7 @@ import SuggestCard from "./SuggestCard"
 const Suggest = () => {
 	function getSuggestPeople() {
 		const { user_id } = JSON.parse(localStorage.getItem("user"))
-		return axios.get(`http://localhost:4000/users/suggest/${user_id}`)
+		return axios.get(`/users/suggest/${user_id}`)
 	}
 
 	const { data } = useQuery(["suggest"], getSuggestPeople)

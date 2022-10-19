@@ -44,7 +44,6 @@ const getLikesCount = async (req, res) => {
 const getAllComments = async (req, res) => {
 	const { postId } = req.params
 	const comments = await Post.getAllComments(postId)
-	console.log("🚀: getAllComments -> comments", comments)
 	if (!comments) res.status(400).json("can't get all comments")
 	res.status(200).json(comments)
 }
