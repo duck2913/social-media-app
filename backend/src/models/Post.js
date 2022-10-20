@@ -4,9 +4,9 @@ class Post {
 	static async addNewPost(user_id, postMsg, postImgUrl) {
 		try {
 			await db.any(
-				`insert into Posts(user_id, content, post_img_url)
-                values ($1,$2,$3)`,
-				[user_id, postMsg, postImgUrl],
+				`insert into Posts(user_id, content, post_img_url, created_at)
+                values ($1,$2,$3,$4)`,
+				[user_id, postMsg, postImgUrl, new Date()],
 			)
 		} catch (error) {
 			console.log(error)
@@ -16,7 +16,10 @@ class Post {
 
 	static async getAllPosts() {
 		try {
-			return await db.any("select * from Posts order by post_id desc")
+			return await db.any(`
+                select p.post_id, p.user_id, p.content, p.post_img_url, p.created_at, u.fullname, u.avatar_url, u.tag
+                from posts p
+                natural join users u`)
 		} catch (error) {
 			console.log(error)
 			throw error
@@ -62,7 +65,14 @@ class Post {
 
 	static async getAllComments(postId) {
 		try {
-			return await db.any("select * from Comments where post_id = $1", postId)
+			return await db.any(
+				`
+            select c.comment_id, c.post_id, c.content, c.post_id, u.avatar_url, u.user_name
+            from Comments c natural join Users u
+            where c.post_id = $1
+            `,
+				postId,
+			)
 		} catch (error) {
 			console.log(error)
 			throw error

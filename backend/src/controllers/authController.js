@@ -53,7 +53,7 @@ const postSignup = async (req, res) => {
 			sender: { email: "api@sendinblue.com", name: "AppCuaBi" },
 			replyTo: { email: "api@sendinblue.com", name: "Sendinblue" },
 			to: [{ email: email }],
-			htmlContent: `<p>Chào bé xiu! Click vào <a href="https://app-backend-a7ig.onrender.com/auth/signup/${token}">link</a> để hoàn thành đăng nhập </p>`,
+			htmlContent: `<p>Chào bé xiu! Click vào <a href="${process.env.SERVER_URL}/auth/signup/${token}">link</a> để hoàn thành đăng nhập </p>`,
 			params: { bodyMessage: "Made just for you!" },
 		})
 		.then(

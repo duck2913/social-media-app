@@ -8,12 +8,12 @@ class User {
 			if (!hash) {
 				const hash = await bcrypt.hash(password, saltRounds)
 				await db.any(
-					`insert into Users(fullname,username,email, password,tag) values ($1, $2, $3, $4, $5)`,
+					`insert into Users(fullname,user_name,email, password,tag) values ($1, $2, $3, $4, $5)`,
 					[fullname, username, email, hash, "@" + username],
 				)
 			} else {
 				await db.any(
-					`insert into Users(fullname,username,email, password,tag) values ($1, $2, $3, $4,$5)`,
+					`insert into Users(fullname,user_name,email, password,tag) values ($1, $2, $3, $4,$5)`,
 					[fullname, username, email, hash, "@" + username],
 				)
 			}
@@ -38,7 +38,7 @@ class User {
 	static async findByEmailOrName(email, username) {
 		try {
 			const queryResult = await db.any(
-				"select user_id,fullname,tag,title,avatar_url from Users where email = $1 or username = $2",
+				"select user_id,fullname,tag,title,avatar_url from Users where email = $1 or user_name = $2",
 				[email, username],
 			)
 			return queryResult[0]
@@ -50,7 +50,7 @@ class User {
 
 	static async checkPassword(username, inputPassword) {
 		try {
-			const queryResult = await db.any("select * from users where username = $1", username)
+			const queryResult = await db.any("select * from users where user_name = $1", username)
 			const password = queryResult[0].password
 			const valid = await bcrypt.compare(inputPassword, password)
 			return valid

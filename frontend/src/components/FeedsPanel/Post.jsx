@@ -7,6 +7,7 @@ import axios from "axios"
 import MoonLoader from "react-spinners/MoonLoader"
 import { TbSend } from "react-icons/tb"
 import { useRef } from "react"
+import { formatDate } from "../../utils"
 
 const Post = ({ post }) => {
 	const queryClient = useQueryClient()
@@ -77,15 +78,12 @@ const Post = ({ post }) => {
 	return (
 		<Card className="rounded-xl px-[1.5rem]">
 			<div className="flex gap-2  mb-4 items-center">
-				<img
-					src={post.user_img_url}
-					alt="user"
-					className="w-[2rem] h-[2rem] rounded-full"
-				/>
+				<img src={post.avatar_url} alt="user" className="w-[2rem] h-[2rem] rounded-full" />
 				<div>
-					<h1 className="font-bold text-gray-400">{post.user_name}</h1>
-					<h1 className="font-semibold text-gray-500 text-sm">{post.user_tag}</h1>
+					<h1 className="font-bold text-gray-400">{post.fullname}</h1>
+					<h1 className="font-semibold text-gray-500 text-sm">{post.tag}</h1>
 				</div>
+				<p className="ml-auto">{formatDate(new Date(post.created_at))}</p>
 			</div>
 			<p className="mb-4 text-lg">{post.content}</p>
 			{post.post_img_url && (
@@ -120,13 +118,13 @@ const Post = ({ post }) => {
 					<div className="flex gap-2 items-end mb-2" key={comment.user_name}>
 						<div className="flex items-center gap-1">
 							<img
-								src={comment.user_img_url}
+								src={comment.avatar_url}
 								alt="user"
 								className="w-[1rem] h-[1rem] rounded-full"
 							/>
 							<h3 className="font-semibold">{comment.user_name}:</h3>
 						</div>
-						<p className="text-xs pb-[1.5px]">{comment.content}</p>
+						<p className="text-xs pb-[2px]">{comment.content}</p>
 					</div>
 				))}
 			</div>

@@ -4,7 +4,7 @@ const postAddNewPost = async (req, res) => {
 	const postImg = req.file
 	const { postMsg, user_id } = req.body
 	let postImgUrl
-	postImg?.filename && (postImgUrl = `https://app-backend-a7ig.onrender.com/${postImg.filename}`)
+	postImg?.filename && (postImgUrl = `${process.env.SERVER_URL}/${postImg.filename}`)
 	await Post.addNewPost(user_id, postMsg, postImgUrl)
 	res.status(200).json("add new post successfully")
 }

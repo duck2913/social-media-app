@@ -3,7 +3,10 @@ const db = require("./config")
 const execute = async () => {
 	try {
 		const query = await db.any(
-			"SELECT * FROM information_schema.tables WHERE table_schema = 'public';",
+			`
+                insert into Posts(user_id, created_at) values($1,$2)
+            `,
+			[1, new Date()],
 		)
 		console.log("🚀 -> file: test.js -> line 6 -> query", query)
 	} catch (error) {
