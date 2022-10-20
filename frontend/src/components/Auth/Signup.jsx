@@ -58,7 +58,7 @@ const Signup = () => {
 			className="h-screen flex flex-col justify-center items-center
         "
 		>
-			{opened && (
+			{/* {opened && (
 				<Notification
 					color="teal"
 					title="Success"
@@ -70,7 +70,7 @@ const Signup = () => {
 				>
 					Please check your email to complete registration!
 				</Notification>
-			)}
+			)} */}
 			<form onSubmit={handleSubmit}>
 				<Card className="form p-5 rounded-xl w-[25rem]">
 					{isLoading && <Loader />}
