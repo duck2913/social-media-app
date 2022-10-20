@@ -142,7 +142,7 @@ const Post = ({ post }) => {
 					</div>
 				))}
 			</div>
-			{commentsListRef.current.clientHeight > 65 && !showAllComments && (
+			{commentsListRef?.current?.clientHeight > 65 && !showAllComments && (
 				<div
 					className="mt-2 opacity-80 px-3 flex items-center gap-1 text-xs cursor-pointer"
 					onClick={() => {
