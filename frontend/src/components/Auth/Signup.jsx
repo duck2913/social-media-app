@@ -27,6 +27,7 @@ const Signup = () => {
 				console.log(data)
 				setOpened(true)
 				setMsg("")
+				!isError && navigate("/")
 			},
 			onError: (error) => {
 				console.log("🚀 -> file: Signup.jsx -> line 28 -> error", error)
