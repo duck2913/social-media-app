@@ -1,7 +1,7 @@
 # Social Media App
+https://social-media-app-eta.vercel.app/
 
 ## A dead simple social media application with the following stack
-https://social-media-app-eta.vercel.app/
 
 ### Backend
 
