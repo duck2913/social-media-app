@@ -6,6 +6,7 @@ services:
       buildCommand: yarn
       startCommand: node server.js
       region: singapore
+      plan: free
       envVars:
           - key: GOOGLE_OAUTH_CLIENT_ID
             value: 284834198457-c68inh273m2js753cinq7nlto3vreg66.apps.googleusercontent.com
