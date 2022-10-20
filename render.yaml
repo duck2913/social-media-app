@@ -22,7 +22,6 @@ services:
       env: static
       buildCommand: cd frontend; yarn; yarn build
       staticPublishPath: ./frontend/build/
-      region: singapore
       # Build and deploy `app-frontend` if any `js` file changes,
       # but ignore any test files.
       buildFilter:
