@@ -12,7 +12,9 @@ const FollowingCard = ({ following }) => {
 	const queryClient = useQueryClient()
 	const { mutate, isLoading } = useMutation(
 		({ myId, unfollowId }) => {
-			return axios.delete("/users/follows", { data: { myId, unfollowId } })
+			return axios.delete(`${process.env.REACT_APP_URL}/users/follows`, {
+				data: { myId, unfollowId },
+			})
 		},
 		{
 			onSuccess: () => {

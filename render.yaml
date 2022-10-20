@@ -5,6 +5,16 @@ services:
       rootDir: backend
       buildCommand: yarn
       startCommand: node server.js
+      region: singapore
+      envVars:
+          - key: GOOGLE_OAUTH_CLIENT_ID
+            value: 284834198457-c68inh273m2js753cinq7nlto3vreg66.apps.googleusercontent.com
+          - key: GOOGLE_OAUTH_CLIENT_SECRET
+            value: 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
+          - key: JWT_SECRET
+            value: secret@123
+          - key: SIB_API_KEY
+            value: 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
 
     - type: web
       name: app-frontend
@@ -12,6 +22,7 @@ services:
       env: static
       buildCommand: cd frontend; yarn; yarn build
       staticPublishPath: ./frontend/build/
+      region: singapore
       # Build and deploy `app-frontend` if any `js` file changes,
       # but ignore any test files.
       buildFilter:
@@ -19,3 +30,12 @@ services:
               - frontend/**/*.js
           ignoredPaths:
               - frontend/**/*.test.js
+      envVars:
+          - key: REACT_APP_URL
+            value: https://app-backend-a7ig.onrender.com
+          - key: REACT_APP_GOOGLE_OAUTH_CLIENT_ID
+            value: 284834198457-c68inh273m2js753cinq7nlto3vreg66.apps.googleusercontent.com
+          - key: REACT_APP_GOOGLE_OAUTH_CLIENT_SECRET
+            value: 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
+          - key: REACT_APP_GOOGLE_OAUTH_REDIRECT
+            value: https://app-frontend-5aet.onrender.com

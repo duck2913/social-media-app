@@ -12,7 +12,7 @@ const SuggestCard = ({ person }) => {
 
 	function postFollowRequest(followId) {
 		const { user_id: myId } = JSON.parse(localStorage.getItem("user"))
-		return axios.post(`/users/follows`, { myId, followId })
+		return axios.post(`${process.env.REACT_APP_URL}/users/follows`, { myId, followId })
 	}
 
 	const { mutate, isLoading } = useMutation(postFollowRequest, {

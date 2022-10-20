@@ -20,7 +20,7 @@ const Signup = () => {
 
 	const { mutate, isLoading, isError } = useMutation(
 		(data) => {
-			return axios.post(`/auth/signup`, data)
+			return axios.post(`${process.env.REACT_APP_URL}/auth/signup`, data)
 		},
 		{
 			onSuccess: (data) => {

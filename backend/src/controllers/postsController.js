@@ -4,7 +4,7 @@ const postAddNewPost = async (req, res) => {
 	const postImg = req.file
 	const { postMsg, user_id } = req.body
 	let postImgUrl
-	postImg?.filename && (postImgUrl = `http://localhost:4000/${postImg.filename}`)
+	postImg?.filename && (postImgUrl = `https://app-backend-a7ig.onrender.com/${postImg.filename}`)
 	await Post.addNewPost(user_id, postMsg, postImgUrl)
 	res.status(200).json("add new post successfully")
 }
@@ -49,8 +49,8 @@ const getAllComments = async (req, res) => {
 }
 
 const postAddComment = async (req, res) => {
-	const { content, userName, postId, userImgUrl } = req.body
-	await Post.addComment(postId, content, userName, userImgUrl)
+	const { content, postId, userId } = req.body
+	await Post.addComment(postId, content, userId)
 	res.status(200).json("add comment successfully")
 }
 

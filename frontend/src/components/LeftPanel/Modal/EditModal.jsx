@@ -25,7 +25,7 @@ const EditModal = ({ setOpenEditModal }) => {
 	}
 
 	function updateInfo(formData) {
-		return axios.put("/users/update", formData)
+		return axios.put(`${process.env.REACT_APP_URL}/users/update`, formData)
 	}
 
 	const queryClient = useQueryClient()

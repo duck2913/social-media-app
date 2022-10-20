@@ -12,8 +12,8 @@ const getUserFollowersAndFollowing = async (req, res) => {
 const postUpdateUser = async (req, res) => {
 	const { newFullName, newTitle, user_id } = req.body
 	const filename = req.file?.filename
-	let avatar_url = ""
-	filename && (avatar_url = `http://localhost:4000/${filename}`)
+	let avatar_url
+	filename && (avatar_url = `https://app-backend-a7ig.onrender.com/${filename}`)
 	await User.updateUserInfo(newFullName, newTitle, avatar_url, user_id)
 	res.status(200).json("test")
 }

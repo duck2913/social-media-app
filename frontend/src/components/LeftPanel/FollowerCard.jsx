@@ -14,7 +14,7 @@ const FollowerCard = (props) => {
 
 	function postFollowRequest(followId) {
 		const { user_id: myId } = JSON.parse(localStorage.getItem("user"))
-		return axios.post(`/users/follows`, { myId, followId })
+		return axios.post(`${process.env.REACT_APP_URL}/users/follows`, { myId, followId })
 	}
 
 	const { mutate: mutateFollow, isLoading: isLoadingFollow } = useMutation(postFollowRequest, {
@@ -31,7 +31,9 @@ const FollowerCard = (props) => {
 
 	const { mutate: mutateUnfollow, isLoading: isLoadingUnfollow } = useMutation(
 		({ myId, unfollowId }) => {
-			return axios.delete("/users/follows", { data: { myId, unfollowId } })
+			return axios.delete(`${process.env.REACT_APP_URL}/users/follows`, {
+				data: { myId, unfollowId },
+			})
 		},
 		{
 			onSuccess: () => {

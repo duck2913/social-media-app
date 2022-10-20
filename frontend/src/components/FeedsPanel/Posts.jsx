@@ -6,7 +6,7 @@ import MoonLoader from "react-spinners/MoonLoader"
 
 const Posts = () => {
 	const { data, isLoading } = useQuery(["posts"], async () => {
-		const res = await axios.get("/posts")
+		const res = await axios.get(`${process.env.REACT_APP_URL}/posts`)
 		return res.data
 	})
 

@@ -2,7 +2,6 @@ import React from "react"
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
 import { AiOutlineMessage } from "react-icons/ai"
 import { Card, TextInput } from "@mantine/core"
-import { formatDate, calcTimePass } from "../../utils"
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import MoonLoader from "react-spinners/MoonLoader"
@@ -11,11 +10,7 @@ import { useRef } from "react"
 
 const Post = ({ post }) => {
 	const queryClient = useQueryClient()
-	const {
-		user_id: userId,
-		fullname: userName,
-		avatar_url: userImgUrl,
-	} = JSON.parse(localStorage.getItem("user"))
+	const { user_id: userId } = JSON.parse(localStorage.getItem("user"))
 
 	const postId = post.post_id
 	const commentRef = useRef()
@@ -31,12 +26,12 @@ const Post = ({ post }) => {
 	const handleAddComment = (e) => {
 		e.preventDefault()
 		const content = commentRef.current.value
-		mutateAddComment({ content, userName, postId, userImgUrl })
+		mutateAddComment({ content, userId, postId })
 		commentRef.current.value = ""
 	}
 
 	const { mutate: mutateLike, isLoading: isLoadingLike } = useMutation(
-		(data) => axios.post("/posts/likes", data),
+		(data) => axios.post(`${process.env.REACT_APP_URL}/posts/likes`, data),
 		{
 			onSuccess: () => {
 				queryClient.invalidateQueries("liked-list")
@@ -46,7 +41,7 @@ const Post = ({ post }) => {
 	)
 
 	const { mutate: mutateUnlike, isLoading: isLoadingUnlike } = useMutation(
-		(data) => axios.delete("/posts/unlikes", { data: data }),
+		(data) => axios.delete(`${process.env.REACT_APP_URL}/posts/unlikes`, { data: data }),
 		{
 			onSuccess: () => {
 				queryClient.invalidateQueries("liked-list")
@@ -56,22 +51,22 @@ const Post = ({ post }) => {
 	)
 
 	const { data: likedList } = useQuery(["liked-list"], async () => {
-		const res = await axios.get(`/posts/likes/?userId=${userId}`)
+		const res = await axios.get(`${process.env.REACT_APP_URL}/posts/likes/?userId=${userId}`)
 		return res?.data?.map((post) => post.post_id)
 	})
 
 	const { data: likesCount } = useQuery(["likesCount", postId], async () => {
-		const res = await axios.get(`/posts/likes/count/${postId}`)
+		const res = await axios.get(`${process.env.REACT_APP_URL}/posts/likes/count/${postId}`)
 		return res.data
 	})
 
 	const { data: comments } = useQuery(["comments", postId], async () => {
-		const res = await axios.get(`/posts/comments/${postId}`)
+		const res = await axios.get(`${process.env.REACT_APP_URL}/posts/comments/${postId}`)
 		return res.data
 	})
 
 	const { mutate: mutateAddComment } = useMutation(
-		(data) => axios.post("/posts/comments", data),
+		(data) => axios.post(`${process.env.REACT_APP_URL}/posts/comments`, data),
 		{
 			onSuccess: () => {
 				queryClient.invalidateQueries("comments", postId)
@@ -90,10 +85,6 @@ const Post = ({ post }) => {
 				<div>
 					<h1 className="font-bold text-gray-400">{post.user_name}</h1>
 					<h1 className="font-semibold text-gray-500 text-sm">{post.user_tag}</h1>
-				</div>
-				<div className="ml-auto flex flex-col text-sm text-gray-500 items-end">
-					<p className="font-semibold">{formatDate(new Date(post.created_at))}</p>
-					<p>{calcTimePass(new Date(post.created_at))} trước</p>
 				</div>
 			</div>
 			<p className="mb-4 text-lg">{post.content}</p>
@@ -126,7 +117,7 @@ const Post = ({ post }) => {
 			</div>
 			<div className="p-3">
 				{comments?.map((comment) => (
-					<div className="flex gap-2 items-center mb-2" key={comment.user_name}>
+					<div className="flex gap-2 items-end mb-2" key={comment.user_name}>
 						<div className="flex items-center gap-1">
 							<img
 								src={comment.user_img_url}
@@ -135,7 +126,7 @@ const Post = ({ post }) => {
 							/>
 							<h3 className="font-semibold">{comment.user_name}:</h3>
 						</div>
-						<p className="text-xs">{comment.content}</p>
+						<p className="text-xs pb-[1.5px]">{comment.content}</p>
 					</div>
 				))}
 			</div>

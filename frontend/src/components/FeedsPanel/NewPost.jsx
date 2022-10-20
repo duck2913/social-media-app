@@ -41,7 +41,7 @@ const NewPost = () => {
 
 	const { mutate } = useMutation(
 		(formData) => {
-			return axios.post("/posts/new-post", formData)
+			return axios.post(`${process.env.REACT_APP_URL}/posts/new-post`, formData)
 		},
 		{
 			onSuccess: () => {
