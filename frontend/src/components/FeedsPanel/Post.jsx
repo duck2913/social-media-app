@@ -136,7 +136,7 @@ const Post = ({ post }) => {
 								alt="user"
 								className="w-[1rem] h-[1rem] rounded-full"
 							/>
-							<h3 className="font-semibold">{comment.user_name}:</h3>
+							<h3 className="font-semibold">{comment.user_name || comment.tag}:</h3>
 						</div>
 						<p className="text-xs pb-[2px]">{comment.content}</p>
 					</div>

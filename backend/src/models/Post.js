@@ -67,7 +67,7 @@ class Post {
 		try {
 			return await db.any(
 				`
-            select c.comment_id, c.post_id, c.content, c.post_id, u.avatar_url, u.user_name
+            select c.comment_id, c.post_id, c.content, c.post_id, u.avatar_url, u.user_name, u.tag
             from Comments c natural join Users u
             where c.post_id = $1
             order by c.comment_id
