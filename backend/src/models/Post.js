@@ -70,6 +70,7 @@ class Post {
             select c.comment_id, c.post_id, c.content, c.post_id, u.avatar_url, u.user_name
             from Comments c natural join Users u
             where c.post_id = $1
+            order by c.comment_id
             `,
 				postId,
 			)

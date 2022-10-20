@@ -1,6 +1,6 @@
-import React from "react"
+import React, { useState } from "react"
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
-import { AiOutlineMessage } from "react-icons/ai"
+import { AiOutlineMessage, AiFillCaretDown } from "react-icons/ai"
 import { Card, TextInput } from "@mantine/core"
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query"
 import axios from "axios"
@@ -12,7 +12,8 @@ import { formatDate } from "../../utils"
 const Post = ({ post }) => {
 	const queryClient = useQueryClient()
 	const { user_id: userId } = JSON.parse(localStorage.getItem("user"))
-
+	const [showAllComments, setShowAllComments] = useState(false)
+	const commentsListRef = useRef()
 	const postId = post.post_id
 	const commentRef = useRef()
 
@@ -108,14 +109,27 @@ const Post = ({ post }) => {
 							onClick={handleLike}
 						/>
 					))}
-				<AiOutlineMessage className="cursor-pointer active:-translate-y-1" />
+				<button
+					className="flex items-center gap-1 cursor-pointer active:-translate-y-1"
+					onClick={() => {
+						setShowAllComments((state) => !state)
+					}}
+				>
+					<AiOutlineMessage />
+				</button>
 			</div>
 			<div className="nums_likes text-sm text-gray-400 mt-2 font-semibold">
 				{likesCount} likes
 			</div>
-			<div className="p-3">
+			<div
+				className={`p-3 ${!showAllComments && "max-h-[4rem] overflow-hidden"}`}
+				ref={commentsListRef}
+			>
 				{comments?.map((comment) => (
-					<div className="flex gap-2 items-end mb-2" key={comment.user_name}>
+					<div
+						className="flex gap-2 items-end mb-2 "
+						key={comment.user_name + Math.random()}
+					>
 						<div className="flex items-center gap-1">
 							<img
 								src={comment.avatar_url}
@@ -128,6 +142,17 @@ const Post = ({ post }) => {
 					</div>
 				))}
 			</div>
+			{commentsListRef.current.clientHeight > 65 && !showAllComments && (
+				<div
+					className="mt-2 opacity-80 px-3 flex items-center gap-1 text-xs cursor-pointer"
+					onClick={() => {
+						setShowAllComments((state) => !state)
+					}}
+				>
+					<p>More</p>
+					<AiFillCaretDown />
+				</div>
+			)}
 			<hr className="my-2" />
 			<form className="w-full relative" onSubmit={handleAddComment}>
 				<TextInput placeholder="Add your comment" required ref={commentRef} />
