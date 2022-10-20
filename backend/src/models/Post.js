@@ -19,7 +19,8 @@ class Post {
 			return await db.any(`
                 select p.post_id, p.user_id, p.content, p.post_img_url, p.created_at, u.fullname, u.avatar_url, u.tag
                 from posts p
-                natural join users u`)
+                natural join users u
+                order by p.post_id desc`)
 		} catch (error) {
 			console.log(error)
 			throw error
