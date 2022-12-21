@@ -4,11 +4,10 @@ const execute = async () => {
 	try {
 		const query = await db.any(
 			`
-                insert into Posts(user_id, created_at) values($1,$2)
+                select * from users
             `,
-			[1, new Date()],
 		)
-		console.log("🚀 -> file: test.js -> line 6 -> query", query)
+		console.log("🚀 -> file: test.js:10 -> query", query)
 	} catch (error) {
 		console.log(error)
 	}

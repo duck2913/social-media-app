@@ -27,8 +27,10 @@ const Post = ({ post }) => {
 
 	const handleAddComment = (e) => {
 		e.preventDefault()
+
 		const content = commentRef.current.value
 		mutateAddComment({ content, userId, postId })
+
 		commentRef.current.value = ""
 	}
 
@@ -87,55 +89,34 @@ const Post = ({ post }) => {
 				<p className="ml-auto">{formatDate(new Date(post.created_at))}</p>
 			</div>
 			<p className="mb-4 text-lg">{post.content}</p>
-			{post.post_img_url && (
-				<img src={post.post_img_url} alt="post" className="post rounded-xl mx-auto" />
-			)}
+			{post.post_img_url && <img src={post.post_img_url} alt="post" className="post rounded-xl mx-auto" />}
 			<div className="buttons flex text-[1.5rem] mt-3 gap-3 ">
 				{likedList?.findIndex((likedId) => likedId === post.post_id) !== -1 &&
 					(isLoadingUnlike ? (
 						<MoonLoader size={20} color={"#d34c4c"} />
 					) : (
-						<AiFillHeart
-							className="text-red-400 cursor-pointer active:-translate-y-1"
-							onClick={handleUnlike}
-						/>
+						<AiFillHeart className="text-red-400 cursor-pointer active:-translate-y-1" onClick={handleUnlike} />
 					))}
 				{likedList?.findIndex((likedId) => likedId === post.post_id) === -1 &&
 					(isLoadingLike ? (
 						<MoonLoader size={20} color={"#d34c4c"} />
 					) : (
-						<AiOutlineHeart
-							className="cursor-pointer active:-translate-y-1"
-							onClick={handleLike}
-						/>
+						<AiOutlineHeart className="cursor-pointer active:-translate-y-1" onClick={handleLike} />
 					))}
 				<button
 					className="flex items-center gap-1 cursor-pointer active:-translate-y-1"
 					onClick={() => {
 						setShowAllComments((state) => !state)
-					}}
-				>
+					}}>
 					<AiOutlineMessage />
 				</button>
 			</div>
-			<div className="nums_likes text-sm text-gray-400 mt-2 font-semibold">
-				{likesCount} likes
-			</div>
-			<div
-				className={`p-3 ${!showAllComments && "max-h-[4rem] overflow-hidden"}`}
-				ref={commentsListRef}
-			>
+			<div className="nums_likes text-sm text-gray-400 mt-2 font-semibold">{likesCount} likes</div>
+			<div className={`p-3 ${!showAllComments && "max-h-[4rem] overflow-hidden"}`} ref={commentsListRef}>
 				{comments?.map((comment) => (
-					<div
-						className="flex gap-2 items-end mb-2 "
-						key={comment.user_name + Math.random()}
-					>
+					<div className="flex gap-2 items-end mb-2 " key={comment.user_name + Math.random()}>
 						<div className="flex items-center gap-1">
-							<img
-								src={comment.avatar_url}
-								alt="user"
-								className="w-[1rem] h-[1rem] rounded-full"
-							/>
+							<img src={comment.avatar_url} alt="user" className="w-[1rem] h-[1rem] rounded-full" />
 							<h3 className="font-semibold">{comment.user_name || comment.tag}:</h3>
 						</div>
 						<p className="text-xs pb-[2px]">{comment.content}</p>
@@ -147,8 +128,7 @@ const Post = ({ post }) => {
 					className="mt-2 opacity-80 px-3 flex items-center gap-1 text-xs cursor-pointer"
 					onClick={() => {
 						setShowAllComments((state) => !state)
-					}}
-				>
+					}}>
 					<p>More</p>
 					<AiFillCaretDown />
 				</div>

@@ -3,7 +3,7 @@ import axios from "axios"
 
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
-import { Loader, Notification } from "@mantine/core"
+import { Loader } from "@mantine/core"
 import { useNavigate } from "react-router-dom"
 import { Card, TextInput } from "@mantine/core"
 
@@ -15,7 +15,6 @@ const Signup = () => {
 	const confirmPasswordRef = useRef()
 
 	const [msg, setMsg] = useState("")
-	const [opened, setOpened] = useState(false)
 	const navigate = useNavigate()
 
 	const { mutate, isLoading, isError } = useMutation(
@@ -25,7 +24,6 @@ const Signup = () => {
 		{
 			onSuccess: (data) => {
 				console.log(data)
-				setOpened(true)
 				setMsg("")
 				!isError && navigate("/")
 			},
@@ -57,21 +55,7 @@ const Signup = () => {
 	return (
 		<div
 			className="h-screen flex flex-col justify-center items-center
-        "
-		>
-			{/* {opened && (
-				<Notification
-					color="teal"
-					title="Success"
-					className="fixed bottom-5 right-5"
-					onClick={() => {
-						setOpened(false)
-						!isError && navigate("/")
-					}}
-				>
-					Please check your email to complete registration!
-				</Notification>
-			)} */}
+        ">
 			<form onSubmit={handleSubmit}>
 				<Card className="form p-5 rounded-xl w-[25rem]">
 					{isLoading && <Loader />}

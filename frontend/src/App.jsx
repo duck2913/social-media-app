@@ -23,9 +23,9 @@ function App() {
 				<div className="blur top-[3rem] right-[4rem] bg-sky-400"></div>
 				<div className="blur bottom-0 bg-pink-700"></div>
 				{/* main */}
-				<LeftPanel />
+				{/* <LeftPanel />
 				<FeedsPanel />
-				<RightPanel />
+				<RightPanel /> */}
 			</div>
 		</>
 	)

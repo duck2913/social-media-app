@@ -1,26 +1,14 @@
 const db = require("../../database/config")
-const bcrypt = require("bcrypt")
-const saltRounds = 10
 
 class User {
-	static async addUser(fullname, username, email, password, hash) {
-		try {
-			if (!hash) {
-				const hash = await bcrypt.hash(password, saltRounds)
-				await db.any(
-					`insert into Users(fullname,user_name,email, password,tag) values ($1, $2, $3, $4, $5)`,
-					[fullname, username, email, hash, "@" + username],
-				)
-			} else {
-				await db.any(
-					`insert into Users(fullname,user_name,email, password,tag) values ($1, $2, $3, $4,$5)`,
-					[fullname, username, email, hash, "@" + username],
-				)
-			}
-		} catch (error) {
-			console.log(error)
-			throw err
-		}
+	static async addUser(fullname, username, email, password) {
+		return await db.any(`insert into Users(fullname,username,email, password,tag) values ($1, $2, $3, $4,$5)`, [
+			fullname,
+			username,
+			email,
+			password,
+			"@" + username,
+		])
 	}
 
 	static async addGoogleUser(name, picture, email) {
@@ -38,7 +26,7 @@ class User {
 	static async findByEmailOrName(email, username) {
 		try {
 			const queryResult = await db.any(
-				"select user_id,fullname,tag,title,avatar_url from Users where email = $1 or user_name = $2",
+				"select user_id,fullname,tag,title,avatar_url from Users where email = $1 or username = $2",
 				[email, username],
 			)
 			return queryResult[0]
@@ -48,12 +36,13 @@ class User {
 		}
 	}
 
-	static async checkPassword(username, inputPassword) {
+	static async checkPassword(username, password) {
 		try {
-			const queryResult = await db.any("select * from users where user_name = $1", username)
-			const password = queryResult[0].password
-			const valid = await bcrypt.compare(inputPassword, password)
-			return valid
+			const queryResult = await db.any("select * from users where username = $1 and password = $2", [
+				username,
+				password,
+			])
+			return queryResult.length > 0 ? true : false
 		} catch (error) {
 			console.log(error)
 			throw error
@@ -79,21 +68,10 @@ class User {
 
 	static async updateUserInfo(newFullname, newTitle, newAvatar_Url, user_id) {
 		try {
-			newFullname &&
-				(await db.any("update Users set fullname = $1 where user_id = $2 ", [
-					newFullname,
-					user_id,
-				]))
-			newTitle &&
-				(await db.any("update Users set title = $1 where user_id = $2 ", [
-					newTitle,
-					user_id,
-				]))
+			newFullname && (await db.any("update Users set fullname = $1 where user_id = $2 ", [newFullname, user_id]))
+			newTitle && (await db.any("update Users set title = $1 where user_id = $2 ", [newTitle, user_id]))
 			newAvatar_Url &&
-				(await db.any("update Users set avatar_url = $1 where user_id = $2 ", [
-					newAvatar_Url,
-					user_id,
-				]))
+				(await db.any("update Users set avatar_url = $1 where user_id = $2 ", [newAvatar_Url, user_id]))
 		} catch (error) {
 			console.log(error)
 			throw error

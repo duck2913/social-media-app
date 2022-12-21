@@ -5,7 +5,7 @@ class Post {
 		try {
 			await db.any(
 				`insert into Posts(user_id, content, post_img_url, created_at)
-                values ($1,$2,$3,$4)`,
+				values ($1,$2,$3,$4)`,
 				[user_id, postMsg, postImgUrl, new Date()],
 			)
 		} catch (error) {
@@ -17,10 +17,10 @@ class Post {
 	static async getAllPosts() {
 		try {
 			return await db.any(`
-                select p.post_id, p.user_id, p.content, p.post_img_url, p.created_at, u.fullname, u.avatar_url, u.tag
-                from posts p
-                natural join users u
-                order by p.post_id desc`)
+				select p.post_id, p.user_id, p.content, p.post_img_url, p.created_at, u.fullname, u.avatar_url, u.tag
+				from posts p
+				natural join users u
+				order by p.post_id desc`)
 		} catch (error) {
 			console.log(error)
 			throw error
@@ -53,10 +53,7 @@ class Post {
 
 	static async getLikesCount(postId) {
 		try {
-			const queryResult = await db.any(
-				"select count(user_id) from Likes where post_id = $1",
-				postId,
-			)
+			const queryResult = await db.any("select count(user_id) from Likes where post_id = $1", postId)
 			return queryResult[0].count
 		} catch (error) {
 			console.log(error)
@@ -68,11 +65,11 @@ class Post {
 		try {
 			return await db.any(
 				`
-            select c.comment_id, c.post_id, c.content, c.post_id, u.avatar_url, u.user_name, u.tag
-            from Comments c natural join Users u
-            where c.post_id = $1
-            order by c.comment_id
-            `,
+			select c.comment_id, c.post_id, c.content, c.post_id, u.avatar_url, u.user_name, u.tag
+			from Comments c natural join Users u
+			where c.post_id = $1
+			order by c.comment_id
+			`,
 				postId,
 			)
 		} catch (error) {
@@ -85,11 +82,11 @@ class Post {
 		try {
 			await db.any(
 				`insert into Comments(post_id, content, user_id)
-                values ($1, $2, $3)`,
+				values ($1, $2, $3)`,
 				[postId, content, userId],
 			)
 		} catch (error) {
-			console.log(error)
+			console.log()
 			throw error
 		}
 	}

@@ -11,15 +11,15 @@ import { useGoogleLogin } from "@react-oauth/google"
 const Login = () => {
 	const nameRef = useRef()
 	const passwordRef = useRef()
-	const [msg, setMsg] = useState("")
+	const [errorMsg, setErrorMsg] = useState("")
 	const navigate = useNavigate()
 	const [, setCookie] = useCookies(["token"])
 
 	function handleLogin(e) {
 		e.preventDefault()
-		const name = nameRef.current.value
+		const username = nameRef.current.value
 		const password = passwordRef.current.value
-		mutate({ name, password })
+		mutate({ username, password })
 	}
 
 	const googleLogin = useGoogleLogin({
@@ -35,7 +35,7 @@ const Login = () => {
 			})
 			const { token, user } = result.data
 			if (!token) {
-				setMsg("please try google login! you have not registered or there is a problem")
+				setErrorMsg("please try google login! you have not registered or there is a problem")
 				return
 			}
 			setCookie("token", token)
@@ -54,10 +54,10 @@ const Login = () => {
 				const { token, user } = data.data
 				setCookie("token", token)
 				localStorage.setItem("user", JSON.stringify(user))
-				navigate("/")
+				// navigate("/")
 			},
 			onError: (error) => {
-				setMsg(error.response.data)
+				setErrorMsg(error.response.data)
 			},
 		},
 	)
@@ -68,13 +68,9 @@ const Login = () => {
 				<Card className="p-5 rounded-xl px-20">
 					{isLoading && <Loader />}
 					<h1 className="text-xl font-semibold text-blue-500 mb-10">Login</h1>
-					{isError && <p className="text-red-400">{msg}</p>}
+					{isError && <p className="text-red-400">{errorMsg}</p>}
 					<p className="mb-1">Name</p>
-					<TextInput
-						type="text"
-						ref={nameRef}
-						className="rounded-md px-2 mb-5 focus:outline-none w-full"
-					/>
+					<TextInput type="text" ref={nameRef} className="rounded-md px-2 mb-5 focus:outline-none w-full" />
 					<p className="mb-1">Password</p>
 					<TextInput
 						type="password"
@@ -89,15 +85,14 @@ const Login = () => {
 						<Button
 							variant="light"
 							className="mt-3 w-full bg-[#426bb7b4] flex text-center"
-							onClick={() => googleLogin()}
-						>
+							onClick={() => googleLogin()}>
 							<FcGoogle className="text-[1.2rem]" />
 							<p className="ml-3">Sign in with Google</p>
 						</Button>
 					</div>
 					{/*  */}
 					<p className="text-sm text-gray-500 mt-3 text-center">
-						Don't have an account?{" "}
+						Don't have an account?
 						<span className="text-blue-400 font-semibold">
 							<Link to={"/signup"}>Sign up</Link>
 						</span>

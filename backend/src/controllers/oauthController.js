@@ -9,9 +9,7 @@ const googleSignIn = async (req, res) => {
 	const user = await User.findByEmailOrName(email, "")
 	if (!user) {
 		await User.addGoogleUser(name, picture, email)
-		return res
-			.status(200)
-			.json("You have been registered with our system! Please log in with google again")
+		return res.status(200).json("You have been registered with our system! Please log in with google again")
 	}
 	const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" })
 	res.json({
