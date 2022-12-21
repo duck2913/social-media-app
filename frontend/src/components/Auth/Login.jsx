@@ -33,7 +33,8 @@ const Login = () => {
 				picture,
 				email,
 			})
-			const { token, user } = result.data
+			const { token, user, message } = result.data
+			console.log("🚀 -> file: Login.jsx:37 -> message", message)
 			if (!token) {
 				setErrorMsg("please try google login! you have not registered or there is a problem")
 				return
@@ -54,7 +55,7 @@ const Login = () => {
 				const { token, user } = data.data
 				setCookie("token", token)
 				localStorage.setItem("user", JSON.stringify(user))
-				// navigate("/")
+				navigate("/")
 			},
 			onError: (error) => {
 				setErrorMsg(error.response.data)

@@ -6,10 +6,10 @@ const googleSignIn = async (req, res) => {
 	const picture = req.body.picture
 	const email = req.body.email
 	// check if user already exist
-	const user = await User.findByEmailOrName(email, "")
+	let user = await User.findByEmailOrName(email, "")
 	if (!user) {
 		await User.addGoogleUser(name, picture, email)
-		return res.status(200).json("You have been registered with our system! Please log in with google again")
+		user = await User.findByEmailOrName(email, "")
 	}
 	const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" })
 	res.json({

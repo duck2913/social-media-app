@@ -14,7 +14,8 @@ class User {
 	static async addGoogleUser(name, picture, email) {
 		try {
 			return await db.any(
-				`insert into Users(fullname,avatar_url,email,tag,password) values ($1, $2, $3, $4, $5)`,
+				`insert into Users(fullname,avatar_url,email,tag,password)
+					  values ($1, $2, $3, $4, $5)`,
 				[name, picture, email, "@" + email.split("@")[0], "co cc chu ma mo"],
 			)
 		} catch (error) {
@@ -26,7 +27,10 @@ class User {
 	static async findByEmailOrName(email, username) {
 		try {
 			const queryResult = await db.any(
-				"select user_id,fullname,tag,title,avatar_url from Users where email = $1 or username = $2",
+				`
+						select user_id,fullname,tag,title,avatar_url
+						from Users
+						where email = $1 or username = $2`,
 				[email, username],
 			)
 			return queryResult[0]
