@@ -58,8 +58,7 @@ const EditModal = ({ setOpenEditModal }) => {
 
 			<button
 				className="block mx-auto mt-5 bg-[#1A2D3F] text-blue-300 py-1 px-2 rounded-lg active:translate-y-1 font-semibold"
-				onClick={handleChangeInfo}
-			>
+				onClick={handleChangeInfo}>
 				Submit
 			</button>
 		</>

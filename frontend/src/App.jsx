@@ -24,7 +24,7 @@ function App() {
 				<div className="blur bottom-0 bg-pink-700"></div>
 				{/* main */}
 				<LeftPanel />
-				<FeedsPanel />
+				{/* <FeedsPanel /> */}
 				<RightPanel />
 			</div>
 		</>

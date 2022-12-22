@@ -33,8 +33,7 @@ const Login = () => {
 				picture,
 				email,
 			})
-			const { token, user, message } = result.data
-			console.log("🚀 -> file: Login.jsx:37 -> message", message)
+			const { token, user } = result.data
 			if (!token) {
 				setErrorMsg("please try google login! you have not registered or there is a problem")
 				return

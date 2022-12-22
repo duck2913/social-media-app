@@ -52,28 +52,21 @@ const Info = () => {
 						<div className="bg-gray-200 h-[2rem] w-[3px]"></div>
 						<div
 							className="flex flex-col items-center cursor-pointer"
-							onClick={() => setOpenFollowingModal(true)}
-						>
+							onClick={() => setOpenFollowingModal(true)}>
 							<div className="font-bold text-white">{follows?.followings.length}</div>
 							<div className="text-xs">Following</div>
 						</div>
 					</div>
 				</div>
 			</Card>
-			<Modal
-				centered
-				opened={openEditModal}
-				onClose={() => setOpenEditModal(false)}
-				withCloseButton={false}
-			>
+			<Modal centered opened={openEditModal} onClose={() => setOpenEditModal(false)} withCloseButton={false}>
 				<EditModal setOpenEditModal={setOpenEditModal} />
 			</Modal>
 			<Modal
 				centered
 				opened={openFollowingModal}
 				onClose={() => setOpenFollowingModal(false)}
-				withCloseButton={false}
-			>
+				withCloseButton={false}>
 				<FollowingModal />
 			</Modal>
 		</>
