@@ -1,5 +1,5 @@
 # Social Media App
-https://social-media-app-eta.vercel.app/
+https://social-media-562q.onrender.com/ (The service may be dead due to free tier hosting of backend services on Railway )
 
 ## A dead simple social media application with the following stack
 
