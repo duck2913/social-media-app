@@ -95,7 +95,10 @@ const Post = ({ post }) => {
 					(isLoadingUnlike ? (
 						<MoonLoader size={20} color={"#d34c4c"} />
 					) : (
-						<AiFillHeart className="text-red-400 cursor-pointer active:-translate-y-1" onClick={handleUnlike} />
+						<AiFillHeart
+							className="text-red-400 cursor-pointer active:-translate-y-1"
+							onClick={handleUnlike}
+						/>
 					))}
 				{likedList?.findIndex((likedId) => likedId === post.post_id) === -1 &&
 					(isLoadingLike ? (
@@ -116,7 +119,11 @@ const Post = ({ post }) => {
 				{comments?.map((comment) => (
 					<div className="flex gap-2 items-end mb-2 " key={comment.user_name + Math.random()}>
 						<div className="flex items-center gap-1">
-							<img src={comment.avatar_url} alt="user" className="w-[1rem] h-[1rem] rounded-full" />
+							<img
+								src={comment.avatar_url || process.env.REACT_APP_DEFAULT_IMG_URL}
+								alt="user"
+								className="w-[1rem] h-[1rem] rounded-full"
+							/>
 							<h3 className="font-semibold">{comment.user_name || comment.tag}:</h3>
 						</div>
 						<p className="text-xs pb-[2px]">{comment.content}</p>

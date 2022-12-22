@@ -95,22 +95,16 @@ const NewPost = () => {
 				</div>
 				<button
 					className="font-bold bg-blue-500 px-2 py-1 rounded-lg text-white active:-translate-y-2 transition-all"
-					onClick={handleAddNewPost}
-				>
+					onClick={handleAddNewPost}>
 					Share
 				</button>
 			</div>
 			{previewImgUrl && (
 				<div className="relative">
-					<img
-						src={previewImgUrl}
-						alt=""
-						className="w-1/2 block mx-auto object-cover rounded-lg mt-4"
-					/>
+					<img src={previewImgUrl} alt="" className="w-1/2 block mx-auto object-cover rounded-lg mt-4" />
 					<div
 						className="absolute top-[5px] right-[26%] rounded-full flex items-center justify-center w-[1rem] h-[1rem] p-2 text-xs bg-[#252424a9] text-white cursor-pointer"
-						onClick={clearPreviewImg}
-					>
+						onClick={clearPreviewImg}>
 						x
 					</div>
 				</div>
