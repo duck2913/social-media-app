@@ -18,8 +18,7 @@ class Post {
 		try {
 			return await db.any(`
 				select p.post_id, p.user_id, p.content, p.post_img_url, p.created_at, u.fullname, u.avatar_url, u.tag
-				from posts p
-				natural join users u
+				from posts p natural join users u
 				order by p.post_id desc`)
 		} catch (error) {
 			console.log(error)
@@ -65,7 +64,7 @@ class Post {
 		try {
 			return await db.any(
 				`
-			select c.comment_id, c.post_id, c.content, c.post_id, u.avatar_url, u.user_name, u.tag
+			select c.comment_id, c.post_id, c.content, u.avatar_url, u.username, u.tag
 			from Comments c natural join Users u
 			where c.post_id = $1
 			order by c.comment_id
